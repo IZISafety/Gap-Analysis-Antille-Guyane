@@ -1,0 +1,1837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>User Profile Harmonisation — Antilles Guyane</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
+/* ── Header ── */
+.header{background:linear-gradient(135deg,#1C2E5C 0%,#2F5496 100%);color:#fff;padding:20px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.header-title{font-size:20px;font-weight:700}
+.header-sub{font-size:12px;opacity:.8;margin-top:2px}
+/* ── KPI bar ── */
+.kpi-row{display:flex;gap:12px;padding:16px 32px;background:white;border-bottom:1px solid #E5E7EB;flex-wrap:wrap}
+.kpi-card{background:#F8FAFC;border:1px solid #E5E7EB;border-radius:10px;padding:10px 18px;min-width:140px;text-align:center}
+.kpi-label{font-size:11px;color:#6B7280;font-weight:500}
+.kpi-value{font-size:22px;font-weight:700;color:#1C2E5C;margin:2px 0}
+.kpi-sub{font-size:10px;color:#9CA3AF}
+/* ── Tabs ── */
+.tabs-bar{background:#fff;border-bottom:2px solid #E5E7EB;padding:0 32px;display:flex;gap:0;position:sticky;top:0;z-index:100}
+.tab-btn{padding:13px 20px;font-size:13px;font-weight:600;cursor:pointer;border:none;background:transparent;color:#6B7280;border-bottom:3px solid transparent;margin-bottom:-2px;font-family:inherit;white-space:nowrap;transition:color .15s}
+.tab-btn:hover{color:#2F5496}
+.tab-btn.active{color:#2F5496;border-bottom-color:#2F5496}
+.tab-content{padding:24px 32px}
+/* ── Matrix (Tab 0) ── */
+.matrix-scroll{overflow:auto;max-height:calc(100vh - 220px);border:1px solid #ddd;border-radius:8px}
+.matrix-info{background:#EBF0FF;border-radius:8px;padding:8px 14px;font-size:12px;color:#1C2E5C;margin-bottom:12px}
+.matrix-table{border-collapse:collapse;font-size:11px}
+.matrix-table thead th{position:sticky;top:0;z-index:3;background:#1C2E5C;color:white}
+.matrix-table thead tr.hrow2 th{top:36px;z-index:2}
+.col-nature {width:140px;min-width:140px;background:#1C2E5C;color:white;font-size:11px;text-align:center;padding:8px 6px}
+.col-profile{width:170px;min-width:170px;background:#2F5496;color:white;font-size:11px;padding:8px 6px}
+.col-corner {background:#1C2E5C;border-right:2px solid #fff}
+.group-header{text-align:center;font-weight:700;color:white;padding:7px 4px;font-size:12px}
+.group-el {background:#2F5496}
+.group-doc{background:#1a4a8a}
+.col-header-th{width:82px;min-width:82px;max-width:82px;padding:5px 4px;text-align:center;font-size:10px;font-weight:600;color:white;vertical-align:middle;word-wrap:break-word;white-space:normal;line-height:1.3;border:1px solid rgba(255,255,255,.15)}
+.el-col {background:#2F5496}
+.doc-col{background:#1a4a8a}
+.nature-cell{background:#EBF0FF;font-weight:700;font-size:11px;color:#1C2E5C;text-align:center;vertical-align:middle;border:1px solid #ccc;padding:5px 6px;width:140px;min-width:140px}
+.nature-first{border-bottom:none!important;vertical-align:top;padding-top:8px}
+.nature-mid  {border-top:none!important;border-bottom:none!important}
+.nature-last {border-top:none!important}
+.nature-single{}
+.fonction-cell{background:#F5F8FF;font-size:11px;font-weight:600;color:#1C2E5C;vertical-align:middle;border:1px solid #ccc;padding:5px 8px;width:170px;min-width:170px}
+.check{text-align:center;color:#1C6B52;font-weight:700;font-size:13px;border:1px solid #e0e0e0;padding:4px 2px;background:#E8F8F1;width:82px}
+.dash {text-align:center;color:#ddd;border:1px solid #f0f0f0;padding:4px 2px;font-size:12px;background:white;width:82px}
+/* ── Data tables (Tabs 1-3) ── */
+.table-wrapper{overflow-x:auto;border-radius:8px;border:1px solid #E5E7EB}
+.data-table{border-collapse:collapse;width:100%;font-size:12px}
+.data-table thead th{background:#1C2E5C;color:white;padding:10px 10px;text-align:left;font-size:11px;white-space:nowrap;position:sticky;top:0;z-index:10;cursor:pointer;user-select:none}
+.data-table thead th:hover{background:#2F5496}
+.data-table tbody tr:nth-child(even){background:#F8FAFC}
+.data-table tbody tr:hover{background:#EBF0FF}
+.data-table td{border-bottom:1px solid #E5E7EB;padding:8px 10px;vertical-align:middle}
+.num{text-align:center;font-weight:600}
+.text-green{color:#15803D}.text-red{color:#DC2626}
+/* ── Search bar ── */
+.search-bar{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.search-bar input{padding:8px 12px;border:1px solid #ddd;border-radius:8px;font-size:13px;min-width:240px;outline:none;font-family:inherit}
+.search-bar input:focus{border-color:#2F5496;box-shadow:0 0 0 2px rgba(47,84,150,.15)}
+.search-bar select{padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:13px;font-family:inherit;outline:none}
+/* ── Badges ── */
+.badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:600}
+.badge-high {background:#FDDCDC;color:#991B1B}
+.badge-med  {background:#FEF3C7;color:#92400E}
+.badge-low  {background:#DBEAFE;color:#1E40AF}
+.badge-ok   {background:#B7E1CD;color:#14532D}
+.badge-undef{background:#F3F4F6;color:#6B7280}
+/* ── Compliance gauge ── */
+.gauge-wrap{display:flex;align-items:center;gap:8px;min-width:110px}
+.gauge-track{flex:1;height:7px;background:#E5E7EB;border-radius:4px;overflow:hidden}
+.gauge-bar{height:7px;border-radius:4px;min-width:2px}
+.gauge-lbl{font-size:11px;font-weight:600;color:#374151;min-width:32px}
+/* ── Chips ── */
+.chips-cell{max-width:220px}
+.chip{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;margin:2px 2px 2px 0;white-space:nowrap}
+.chip-add{background:#FDDCDC;color:#991B1B;border:1px solid #FCA5A5}
+.chip-rem{background:#B7E1CD;color:#14532D;border:1px solid #86EFAC}
+.none-chip{color:#ccc;font-size:12px}
+/* ── Src cells (Tab 3) ── */
+.src-cell{font-size:10px;color:#555;width:175px;min-width:150px;max-width:210px;word-wrap:break-word;white-space:normal;border-bottom:1px solid #E5E7EB;padding:6px 8px;vertical-align:middle}
+/* ── % badges ── */
+.pct-badge{display:inline-block;padding:3px 10px;border-radius:10px;font-size:11px;font-weight:700}
+.pct-high{background:#FDDCDC;color:#991B1B}
+.pct-med {background:#FEF3C7;color:#92400E}
+.pct-low {background:#B7E1CD;color:#14532D}
+/* ── Section info banner ── */
+.info-banner{background:#EBF0FF;border-left:4px solid #2F5496;border-radius:0 8px 8px 0;padding:10px 16px;font-size:12px;color:#1C2E5C;margin-bottom:16px;line-height:1.6}
+
+/* ── Synthèse styles ── */
+.synth-wrap{max-width:780px;margin:0 auto}
+.synth-card{background:white;border-radius:12px;border:1px solid #E5E7EB;padding:28px 32px;margin-bottom:20px}
+.synth-card-title{font-size:13px;font-weight:700;color:#1C2E5C;text-transform:uppercase;letter-spacing:.05em;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid #EBF0FF}
+.synth-profile-row{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid #F3F4F6}
+.synth-profile-row:last-child{border-bottom:none}
+.synth-profile-name{font-weight:700;font-size:13px;color:#111827;min-width:220px}
+.synth-profile-detail{font-size:12px;color:#374151;flex:1;line-height:1.5}
+.synth-tag{display:inline-block;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:600;margin-right:6px;white-space:nowrap}
+.tag-urgent{background:#FDDCDC;color:#991B1B}
+.tag-ok{background:#B7E1CD;color:#14532D}
+.synth-pending-item{background:#FFFBEB;border-left:3px solid #F59E0B;border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:10px;font-size:12px;line-height:1.6}
+.synth-pending-item strong{color:#92400E;display:block;margin-bottom:2px}
+.synth-footer{background:#F0F4FF;border-radius:8px;padding:12px 16px;font-size:12px;color:#1C2E5C;margin-top:4px}
+</style>
+</head>
+<body>
+<!-- Header -->
+<div class="header">
+  <div>
+    <div class="header-title">User Profile Harmonisation — Antilles Guyane</div>
+    <div class="header-sub">IZI Safety · Subsidiary Gap Analysis Report · 2026</div>
+  </div>
+</div>
+<!-- KPIs -->
+<div class="kpi-row">
+  <div class="kpi-card">
+    <div class="kpi-label">Companies Impacted</div>
+    <div class="kpi-value" style="color:#DC2626">60</div>
+    <div class="kpi-sub">out of 83 in platform</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">Users in Scope</div>
+    <div class="kpi-value">765</div>
+    <div class="kpi-sub">total users</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">Average Compliance</div>
+    <div class="kpi-value" style="color:#DC2626">13%</div>
+    <div class="kpi-sub">mapped profiles</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">Local Profiles</div>
+    <div class="kpi-value">30</div>
+    <div class="kpi-sub">30 mapped · 0 without mapping</div>
+  </div>
+</div>
+<!-- Tabs -->
+<div class="tabs-bar">
+  <button class="tab-btn active" onclick="switchTab(0)">Harmonised Matrix</button>
+  <button class="tab-btn" onclick="switchTab(1)">Impact by Company</button>
+  <button class="tab-btn" onclick="switchTab(2)">Impact by Profile</button>
+  <button class="tab-btn" onclick="switchTab(3)">Detailed Analysis</button>
+  <button class="tab-btn" onclick="switchTab(4)">Synthèse</button>
+</div>
+<!-- ══════════════════════════════════════════ TAB 0 ══════ -->
+<div class="tab-content" id="tab0" style="display:block">
+  <div class="matrix-info">📋 HQ Reference Matrix — 56 profiles · 11 e-learnings · 22 certifications</div>
+  <div class="matrix-scroll">
+  <table class="matrix-table">
+  <thead>
+    <tr class="hrow1">
+      <th class="col-corner" style="top:0"></th>
+      <th class="col-corner" style="top:0"></th>
+      <th colspan="11" class="group-header group-el">E-learnings</th>
+      <th colspan="22" class="group-header group-doc">Certifications / Qualifications</th>
+    </tr>
+    <tr class="hrow2">
+      <th class="col-nature">Work type</th>
+      <th class="col-profile">HQ Profile</th>
+      <th class="col-header-th el-col">Behaviours</th><th class="col-header-th el-col">Golden rules</th><th class="col-header-th el-col">Protective equipment</th><th class="col-header-th el-col">Confined space work</th><th class="col-header-th el-col">Powered Systems</th><th class="col-header-th el-col">Powered systems mechanical</th><th class="col-header-th el-col">Excavation works</th><th class="col-header-th el-col">Work at height</th><th class="col-header-th el-col">Hot works</th><th class="col-header-th el-col">Lifting operations</th><th class="col-header-th el-col">Works management</th>
+      <th class="col-header-th doc-col">Identity document</th><th class="col-header-th doc-col">Medical fitness declaration by the employer</th><th class="col-header-th doc-col">Electrical work certification</th><th class="col-header-th doc-col">Powered mechanical systems certification</th><th class="col-header-th doc-col">Forklift operating licence</th><th class="col-header-th doc-col">CACES or equivalent crane</th><th class="col-header-th doc-col">CACES or equivalent elevated work platform</th><th class="col-header-th doc-col">Rigger specialist training</th><th class="col-header-th doc-col">Firefighter specialist training</th><th class="col-header-th doc-col">First aider specialist training</th><th class="col-header-th doc-col">Gas measurement specialist training</th><th class="col-header-th doc-col">Heavy vehicle driving licence</th><th class="col-header-th doc-col">Welder certification</th><th class="col-header-th doc-col">Construction site certification</th><th class="col-header-th doc-col">Confined space work certification</th><th class="col-header-th doc-col">MEWP CACES operating licence</th><th class="col-header-th doc-col">Working at height certification</th><th class="col-header-th doc-col">ATEX training certification</th><th class="col-header-th doc-col">Scaffold erector/dismantler certification</th><th class="col-header-th doc-col">Pumping training</th><th class="col-header-th doc-col">High pressure cleaning training</th><th class="col-header-th doc-col">Scaffold inspector certification</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td class="nature-cell nature-first">Maritime Activity</td><td class="fonction-cell">Mooring Master</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-last"></td><td class="fonction-cell">Diver</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-single">Air Conditioning / Refrigeration</td><td class="fonction-cell">HVAC Technician</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-first">Metal Construction / Piping / Tank</td><td class="fonction-cell">Steel Construction Technician</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-mid"></td><td class="fonction-cell">Calibration Technician</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-last"></td><td class="fonction-cell">Sandblasting Technician</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-first">Control - Supervision</td><td class="fonction-cell">Contractor Supervisor</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-last"></td><td class="fonction-cell">TE supervisor</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-first">Work on Systems Powered by Electrical Energy</td><td class="fonction-cell">Electrician</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-mid"></td><td class="fonction-cell">Electrical Works Manager</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-mid"></td><td class="fonction-cell">Solar Panel Technician</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-last"></td><td class="fonction-cell">Electrical Systems Worker</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-single">Security / Cleaning</td><td class="fonction-cell">Security/Cleaning Officer</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-first">Civil Engineering and Other Works</td><td class="fonction-cell">Gardener</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-mid"></td><td class="fonction-cell">Works Operator</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-mid"></td><td class="fonction-cell">Painter</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-mid"></td><td class="fonction-cell">Plumber</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-last"></td><td class="fonction-cell">Warehouseman</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-first">Hydro Jetting - Pumping</td><td class="fonction-cell">Pumping Deck Chief</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-last"></td><td class="fonction-cell">Pump Operator</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-single">Telecom &amp; IT Installation</td><td class="fonction-cell">Telecom &amp; IT Technician</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-first">Lifting and Handling</td><td class="fonction-cell">Lifting Operations Chief</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-mid"></td><td class="fonction-cell">Forklift Operator</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-mid"></td><td class="fonction-cell">Crane Operator</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-mid"></td><td class="fonction-cell">Bridge Crane Operator</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-last"></td><td class="fonction-cell">Slinger / Rigger</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-single">Fire Fighting</td><td class="fonction-cell">Firefighter</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-single">Rescue / First Aid</td><td class="fonction-cell">First Aider</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-first">Maintenance</td><td class="fonction-cell">Maintenance Technician</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-last"></td><td class="fonction-cell">Electromechanical Maintenance Technician</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-single">Cleaning / Degassing</td><td class="fonction-cell">Cleaning/Degassing Technician</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-first">High Pressure Cleaning</td><td class="fonction-cell">High Pressure Deck Chief</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-last"></td><td class="fonction-cell">High Pressure Operator</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-single">Production / Factory</td><td class="fonction-cell">Production Manager</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-first">Service Station</td><td class="fonction-cell">COCO Station Manager</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-mid"></td><td class="fonction-cell">COCO Station Attendant</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-mid"></td><td class="fonction-cell">COCO Station Manager</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-last"></td><td class="fonction-cell">CODO/DODO Station Attendant</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-first">Transport</td><td class="fonction-cell">Heavy Truck Driver</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-last"></td><td class="fonction-cell">Light Vehicle Driver</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-first">Hot Works</td><td class="fonction-cell">Welder</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-mid"></td><td class="fonction-cell">Hot Work Technician</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-last"></td><td class="fonction-cell">ATEX Zone Worker</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-first">Excavation Works</td><td class="fonction-cell">Excavation Works Supervisor</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-mid"></td><td class="fonction-cell">Excavation Equipment Operator</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-last"></td><td class="fonction-cell">Excavation Work Technician</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-first">Confined Space Works</td><td class="fonction-cell">Lamination Operator</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-mid"></td><td class="fonction-cell">Confined Space Monitor</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-last"></td><td class="fonction-cell">Confined Space Worker</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-first">Work at Height</td><td class="fonction-cell">MEWP Operator</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-mid"></td><td class="fonction-cell">Scaffolding Erector/Dismantler</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-mid"></td><td class="fonction-cell">Scaffolding Inspector</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td></tr>
+<tr><td class="nature-cell nature-last"></td><td class="fonction-cell">Work at Height Technician</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-single">Work on Systems Powered by Energy</td><td class="fonction-cell">Powered mechanical systems operator</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-single">Work on Systems Powered by Mechanical Energy</td><td class="fonction-cell">Non-Electrical Energy Systems Worker</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+<tr><td class="nature-cell nature-single">Lifting Works</td><td class="fonction-cell">Lifting Work Technician</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="check">✓</td><td class="dash">·</td><td class="check">✓</td><td class="check">✓</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td><td class="dash">·</td></tr>
+  </tbody>
+  </table>
+  </div>
+</div>
+<!-- ══════════════════════════════════════════ TAB 1 ══════ -->
+<div class="tab-content" id="tab1" style="display:none">
+  <div class="info-banner">Number of users per company affected by the harmonisation. Sorted by impacted users descending.</div>
+  <div class="search-bar">
+    <input type="text" placeholder="Search company…" oninput="filterTable('t1',this.value)">
+  </div>
+  <div class="table-wrapper" style="max-height:calc(100vh - 260px);overflow-y:auto">
+    <table class="data-table" id="t1">
+      <thead>
+        <tr>
+          <th onclick="sortTable('t1',0)">Company</th>
+          <th onclick="sortTable('t1',1)" style="text-align:right">Total Users</th>
+          <th onclick="sortTable('t1',2)" style="text-align:right">Impacted Users</th>
+          <th onclick="sortTable('t1',3)" style="text-align:right">% Impacted</th>
+          <th onclick="sortTable('t1',4)">Profiles in Scope</th>
+        </tr>
+      </thead>
+      <tbody>
+<tr>
+  <td style="font-weight:600">CARAIB MOTER</td>
+  <td class="num">84</td>
+  <td class="num">41</td>
+  <td class="num"><span class="pct-badge pct-med">49%</span></td>
+  <td style="font-size:10px;color:#555">Ouvrier Qualifié (21); Conducteur Engin De Chantier (19); Chef De Chantier (12); Ouvrier Hautement Qualifié (10); Conducteur De Travaux (8); Manoeuvre (8); Superviseur (2); Technicien (1); Chef De Manoeuvre (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">SUNZIL CARAIBES</td>
+  <td class="num">85</td>
+  <td class="num">31</td>
+  <td class="num"><span class="pct-badge pct-med">36%</span></td>
+  <td style="font-size:10px;color:#555">Intervenant En Hauteur (28); Solarisation (24); Ouvrier Qualifié (12); Technicien (7); Electricien (7); Superviseur (4); Conducteur De Travaux (2); Chef De Chantier (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">EIB</td>
+  <td class="num">41</td>
+  <td class="num">30</td>
+  <td class="num"><span class="pct-badge pct-high">73%</span></td>
+  <td style="font-size:10px;color:#555">Grutier Levageur (8); Nettoyage Hp (8); Intervenant En Zone Atex (7); Technicien (6); Ouvrier Qualifié (4); Superviseur (3); Chef De Chantier (2); Conducteur Engin De Chantier (1); Chef De Manoeuvre (1); Conducteur De Travaux (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">TotalEnergies Marketing Antilles-Guyane</td>
+  <td class="num">150</td>
+  <td class="num">18</td>
+  <td class="num"><span class="pct-badge pct-low">12%</span></td>
+  <td style="font-size:10px;color:#555">Translation_Key_Gerant_Totalenergies (70); Digital_Ptw_Aa (30); Superviseur Totalenergies (15); Translation_Key_Demo (10); Superviseur (2); Technicien (1); Chef De Chantier (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">E COMPAGNIE</td>
+  <td class="num">16</td>
+  <td class="num">11</td>
+  <td class="num"><span class="pct-badge pct-med">69%</span></td>
+  <td style="font-size:10px;color:#555">Intervenant En Zone Atex (6); Nettoyage Hp (3); Chef De Chantier (2); Manager (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">APAVE</td>
+  <td class="num">11</td>
+  <td class="num">11</td>
+  <td class="num"><span class="pct-badge pct-high">100%</span></td>
+  <td style="font-size:10px;color:#555">Superviseur Totalenergies (11)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">GENERGIES</td>
+  <td class="num">20</td>
+  <td class="num">10</td>
+  <td class="num"><span class="pct-badge pct-med">50%</span></td>
+  <td style="font-size:10px;color:#555">Technicien (9); Conducteur De Travaux (4); Solarisation (3); Superviseur (3); Intervenant En Hauteur (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">DEFICLIM</td>
+  <td class="num">8</td>
+  <td class="num">8</td>
+  <td class="num"><span class="pct-badge pct-high">100%</span></td>
+  <td style="font-size:10px;color:#555">Maint Climatisation (5); Superviseur (2); Conducteur De Travaux (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">GINGER BURGEAP</td>
+  <td class="num">10</td>
+  <td class="num">8</td>
+  <td class="num"><span class="pct-badge pct-high">80%</span></td>
+  <td style="font-size:10px;color:#555">Conducteur De Travaux (5); Manoeuvre (2); Conducteur Engin De Chantier (2); Chef De Chantier (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">ASSISTANCE 97 MQ</td>
+  <td class="num">14</td>
+  <td class="num">8</td>
+  <td class="num"><span class="pct-badge pct-med">57%</span></td>
+  <td style="font-size:10px;color:#555">Maintenance Groupe Elec Compress (7); Electricien (6); Superviseur (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">SARP CARAIBE/ECO CENTRE GUYANE</td>
+  <td class="num">7</td>
+  <td class="num">6</td>
+  <td class="num"><span class="pct-badge pct-high">86%</span></td>
+  <td style="font-size:10px;color:#555">Intervenant En Zone Atex (4); Nettoyage Hp (2); Manager (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">SOGECO Caraïbes</td>
+  <td class="num">6</td>
+  <td class="num">6</td>
+  <td class="num"><span class="pct-badge pct-high">100%</span></td>
+  <td style="font-size:10px;color:#555">Maintenance Lavage (4); Conducteur De Travaux (1); Superviseur (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">SOGEA Martinique</td>
+  <td class="num">14</td>
+  <td class="num">5</td>
+  <td class="num"><span class="pct-badge pct-med">36%</span></td>
+  <td style="font-size:10px;color:#555">Ouvrier Qualifié (4); Conducteur De Travaux (2); Ouvrier Hautement Qualifié (2); Superviseur (2); Digital_Ptw_Aa (2); Manoeuvre (1); Chef De Chantier (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">SGTC</td>
+  <td class="num">8</td>
+  <td class="num">5</td>
+  <td class="num"><span class="pct-badge pct-med">62%</span></td>
+  <td style="font-size:10px;color:#555">Conducteur Engin De Chantier (2); Ouvrier Qualifié (1); Manoeuvre (1); Conducteur De Travaux (1); Technicien (1); Chef De Chantier (1); Superviseur (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">LPI</td>
+  <td class="num">8</td>
+  <td class="num">5</td>
+  <td class="num"><span class="pct-badge pct-med">62%</span></td>
+  <td style="font-size:10px;color:#555">Intervenant En Zone Atex (3); Technicien (2); Maintenance Extincteurs (2)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">CAA GUADELOUPE</td>
+  <td class="num">10</td>
+  <td class="num">4</td>
+  <td class="num"><span class="pct-badge pct-med">40%</span></td>
+  <td style="font-size:10px;color:#555">Technicien (5); Superviseur (2); Chef De Chantier (1); Intervenant En Hauteur (1); Conducteur De Travaux (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">GEL SECURITE</td>
+  <td class="num">4</td>
+  <td class="num">4</td>
+  <td class="num"><span class="pct-badge pct-high">100%</span></td>
+  <td style="font-size:10px;color:#555">Telesurveillance (2); Superviseur (1); Intervenant En Zone Atex (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">RITTER</td>
+  <td class="num">14</td>
+  <td class="num">3</td>
+  <td class="num"><span class="pct-badge pct-low">21%</span></td>
+  <td style="font-size:10px;color:#555">Technicien (11); Intervenant En Zone Atex (2); Grutier Levageur (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">EZ DRIVE</td>
+  <td class="num">10</td>
+  <td class="num">3</td>
+  <td class="num"><span class="pct-badge pct-med">30%</span></td>
+  <td style="font-size:10px;color:#555">Electricien (5); Manoeuvre (2); Conducteur De Travaux (1); Chef De Chantier (1); Superviseur (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">EMPH</td>
+  <td class="num">6</td>
+  <td class="num">3</td>
+  <td class="num"><span class="pct-badge pct-med">50%</span></td>
+  <td style="font-size:10px;color:#555">Technicien (2); Maintenance Lavage (2); Chef De Manoeuvre (1); Superviseur (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">SITEL CARAIBES</td>
+  <td class="num">6</td>
+  <td class="num">3</td>
+  <td class="num"><span class="pct-badge pct-med">50%</span></td>
+  <td style="font-size:10px;color:#555">Electricien (2); Chef De Chantier (1); Superviseur (1); Conducteur De Nacelle (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">GINGER CAMAXA</td>
+  <td class="num">6</td>
+  <td class="num">3</td>
+  <td class="num"><span class="pct-badge pct-med">50%</span></td>
+  <td style="font-size:10px;color:#555">Technicien (2); Conducteur Engin De Chantier (2); Superviseur (1); Manoeuvre (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">FOSELEV AGINTIS ANTILLES</td>
+  <td class="num">3</td>
+  <td class="num">3</td>
+  <td class="num"><span class="pct-badge pct-high">100%</span></td>
+  <td style="font-size:10px;color:#555">Superviseur (2); Conducteur De Travaux (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">TotalEnergies</td>
+  <td class="num">24</td>
+  <td class="num">3</td>
+  <td class="num"><span class="pct-badge pct-low">12%</span></td>
+  <td style="font-size:10px;color:#555">Superviseur Totalenergies (3); Digital_Ptw_Aa (1); Electricien (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">Incendies Energies Sécurité</td>
+  <td class="num">6</td>
+  <td class="num">3</td>
+  <td class="num"><span class="pct-badge pct-med">50%</span></td>
+  <td style="font-size:10px;color:#555">Maintenance Extincteurs (3); Technicien (3)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">ECO&#x27;NET MULTISERVICES</td>
+  <td class="num">3</td>
+  <td class="num">3</td>
+  <td class="num"><span class="pct-badge pct-high">100%</span></td>
+  <td style="font-size:10px;color:#555">Maintenance Lavage (2); Chef De Chantier (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">GINGER GEOLAB</td>
+  <td class="num">3</td>
+  <td class="num">3</td>
+  <td class="num"><span class="pct-badge pct-high">100%</span></td>
+  <td style="font-size:10px;color:#555">Conducteur De Travaux (3)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">EIFFAGE ENERGIE SYSTEMES</td>
+  <td class="num">2</td>
+  <td class="num">2</td>
+  <td class="num"><span class="pct-badge pct-high">100%</span></td>
+  <td style="font-size:10px;color:#555">Superviseur (2)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">Locmanu Martinique</td>
+  <td class="num">3</td>
+  <td class="num">2</td>
+  <td class="num"><span class="pct-badge pct-med">67%</span></td>
+  <td style="font-size:10px;color:#555">Grutier Levageur (2); Ent Levage (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">CLEAN BUILDING</td>
+  <td class="num">5</td>
+  <td class="num">2</td>
+  <td class="num"><span class="pct-badge pct-med">40%</span></td>
+  <td style="font-size:10px;color:#555">Technicien (1); Nettoyage Hp (1); Conducteur De Nacelle (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">FOSELEV AGNITIS GUYANE</td>
+  <td class="num">4</td>
+  <td class="num">2</td>
+  <td class="num"><span class="pct-badge pct-med">50%</span></td>
+  <td style="font-size:10px;color:#555">Soudeur (1); Elingueur (1); Certification Mase (1); Superviseur (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">CLIMALIZE</td>
+  <td class="num">7</td>
+  <td class="num">2</td>
+  <td class="num"><span class="pct-badge pct-low">29%</span></td>
+  <td style="font-size:10px;color:#555">Technicien (5); Superviseur (2)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">BAMYRAG</td>
+  <td class="num">3</td>
+  <td class="num">2</td>
+  <td class="num"><span class="pct-badge pct-med">67%</span></td>
+  <td style="font-size:10px;color:#555">Superviseur Totalenergies (2); Digital_Ptw_Aa (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">CITA</td>
+  <td class="num">2</td>
+  <td class="num">2</td>
+  <td class="num"><span class="pct-badge pct-high">100%</span></td>
+  <td style="font-size:10px;color:#555">Superviseur (1); Telesurveillance (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">FIX METAL</td>
+  <td class="num">4</td>
+  <td class="num">2</td>
+  <td class="num"><span class="pct-badge pct-med">50%</span></td>
+  <td style="font-size:10px;color:#555">Soudeur (2); Intervenant En Hauteur (2)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">ASSISTANCE GUYANE ENERGIE</td>
+  <td class="num">1</td>
+  <td class="num">1</td>
+  <td class="num"><span class="pct-badge pct-high">100%</span></td>
+  <td style="font-size:10px;color:#555">Superviseur (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">FOSELEV AGINTIS GUYANE</td>
+  <td class="num">6</td>
+  <td class="num">1</td>
+  <td class="num"><span class="pct-badge pct-low">17%</span></td>
+  <td style="font-size:10px;color:#555">Elingueur (2); Intervenant En Hauteur (1); Translation_Key_Aipr (1); Intervenant En Zone Atex (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">TCF</td>
+  <td class="num">7</td>
+  <td class="num">1</td>
+  <td class="num"><span class="pct-badge pct-low">14%</span></td>
+  <td style="font-size:10px;color:#555">Technicien (6); Superviseur (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">AD Construction</td>
+  <td class="num">5</td>
+  <td class="num">1</td>
+  <td class="num"><span class="pct-badge pct-low">20%</span></td>
+  <td style="font-size:10px;color:#555">Ouvrier Qualifié (4); Chef De Chantier (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">BUREAU VERITAS ANTILLES-GUYANE</td>
+  <td class="num">2</td>
+  <td class="num">1</td>
+  <td class="num"><span class="pct-badge pct-med">50%</span></td>
+  <td style="font-size:10px;color:#555">Superviseur (1); Digital_Ptw_Aa (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">Les Bougainvillées</td>
+  <td class="num">3</td>
+  <td class="num">1</td>
+  <td class="num"><span class="pct-badge pct-med">33%</span></td>
+  <td style="font-size:10px;color:#555">Intervenant En Hauteur (2); Conducteur De Travaux (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">KARUKERA ASSAINISSEMENT</td>
+  <td class="num">8</td>
+  <td class="num">1</td>
+  <td class="num"><span class="pct-badge pct-low">12%</span></td>
+  <td style="font-size:10px;color:#555">Technicien (5); Superviseur (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">JCC</td>
+  <td class="num">14</td>
+  <td class="num">1</td>
+  <td class="num"><span class="pct-badge pct-low">7%</span></td>
+  <td style="font-size:10px;color:#555">Intervenant En Hauteur (12); Technicien (1); Superviseur Totalenergies (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">IZI SAFETY</td>
+  <td class="num">16</td>
+  <td class="num">1</td>
+  <td class="num"><span class="pct-badge pct-low">6%</span></td>
+  <td style="font-size:10px;color:#555">Soudeur (1); Plombier (1); Technicien (1); Manager (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">TRADIMA</td>
+  <td class="num">2</td>
+  <td class="num">1</td>
+  <td class="num"><span class="pct-badge pct-med">50%</span></td>
+  <td style="font-size:10px;color:#555">Conducteur Engin De Chantier (1); Manager (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">SOGEA GUYANE</td>
+  <td class="num">2</td>
+  <td class="num">1</td>
+  <td class="num"><span class="pct-badge pct-med">50%</span></td>
+  <td style="font-size:10px;color:#555">Conducteur De Travaux (1); Manager (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">MOUNSAMY CHARLY EMC</td>
+  <td class="num">6</td>
+  <td class="num">1</td>
+  <td class="num"><span class="pct-badge pct-low">17%</span></td>
+  <td style="font-size:10px;color:#555">Technicien (5); Chef De Chantier (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">MGM ETANCHEITE</td>
+  <td class="num">1</td>
+  <td class="num">1</td>
+  <td class="num"><span class="pct-badge pct-high">100%</span></td>
+  <td style="font-size:10px;color:#555">Superviseur (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">MGM</td>
+  <td class="num">8</td>
+  <td class="num">1</td>
+  <td class="num"><span class="pct-badge pct-low">12%</span></td>
+  <td style="font-size:10px;color:#555">Intervenant En Hauteur (6); Superviseur (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">TotalEnergies Marketing USA</td>
+  <td class="num">1</td>
+  <td class="num">1</td>
+  <td class="num"><span class="pct-badge pct-high">100%</span></td>
+  <td style="font-size:10px;color:#555">Superviseur Totalenergies (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">ELECTRA FWI</td>
+  <td class="num">5</td>
+  <td class="num">1</td>
+  <td class="num"><span class="pct-badge pct-low">20%</span></td>
+  <td style="font-size:10px;color:#555">Electricien (4); Superviseur (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">STLM</td>
+  <td class="num">1</td>
+  <td class="num">1</td>
+  <td class="num"><span class="pct-badge pct-high">100%</span></td>
+  <td style="font-size:10px;color:#555">Chef De Chantier (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">HELIATEC</td>
+  <td class="num">1</td>
+  <td class="num">1</td>
+  <td class="num"><span class="pct-badge pct-high">100%</span></td>
+  <td style="font-size:10px;color:#555">Superviseur (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">CHARPENTE DES ANTILLES</td>
+  <td class="num">3</td>
+  <td class="num">1</td>
+  <td class="num"><span class="pct-badge pct-med">33%</span></td>
+  <td style="font-size:10px;color:#555">Ent Toiture Et Etancheite (2); Superviseur (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">METALU GUADELOUPE</td>
+  <td class="num">1</td>
+  <td class="num">1</td>
+  <td class="num"><span class="pct-badge pct-high">100%</span></td>
+  <td style="font-size:10px;color:#555">Superviseur (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">TREND CONCEPT</td>
+  <td class="num">1</td>
+  <td class="num">1</td>
+  <td class="num"><span class="pct-badge pct-high">100%</span></td>
+  <td style="font-size:10px;color:#555">Chef De Chantier (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">TECHNIK CLIM ET FROID</td>
+  <td class="num">1</td>
+  <td class="num">1</td>
+  <td class="num"><span class="pct-badge pct-high">100%</span></td>
+  <td style="font-size:10px;color:#555">Superviseur (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">GINGER V SCAN</td>
+  <td class="num">2</td>
+  <td class="num">1</td>
+  <td class="num"><span class="pct-badge pct-med">50%</span></td>
+  <td style="font-size:10px;color:#555">Technicien (1); Conducteur De Travaux (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">Bureau Veritas Amerique</td>
+  <td class="num">1</td>
+  <td class="num">1</td>
+  <td class="num"><span class="pct-badge pct-high">100%</span></td>
+  <td style="font-size:10px;color:#555">Superviseur Totalenergies (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">ITS</td>
+  <td class="num">2</td>
+  <td class="num">1</td>
+  <td class="num"><span class="pct-badge pct-med">50%</span></td>
+  <td style="font-size:10px;color:#555">Installateur Video Surveillance (1); Electricien (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">TUNZINI 971</td>
+  <td class="num">10</td>
+  <td class="num">0</td>
+  <td class="num"><span class="pct-badge pct-low">0%</span></td>
+  <td style="font-size:10px;color:#555">Technicien (10)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">AB 6</td>
+  <td class="num">1</td>
+  <td class="num">0</td>
+  <td class="num"><span class="pct-badge pct-low">0%</span></td>
+  <td style="font-size:10px;color:#555"></td>
+</tr>
+<tr>
+  <td style="font-weight:600">AdviSafe</td>
+  <td class="num">1</td>
+  <td class="num">0</td>
+  <td class="num"><span class="pct-badge pct-low">0%</span></td>
+  <td style="font-size:10px;color:#555">Digital_Ptw_Aa (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">SORBON</td>
+  <td class="num">1</td>
+  <td class="num">0</td>
+  <td class="num"><span class="pct-badge pct-low">0%</span></td>
+  <td style="font-size:10px;color:#555">Intervenant En Hauteur (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">SAM TCE</td>
+  <td class="num">3</td>
+  <td class="num">0</td>
+  <td class="num"><span class="pct-badge pct-low">0%</span></td>
+  <td style="font-size:10px;color:#555">Intervenant En Hauteur (2); Technicien (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">BATI SL</td>
+  <td class="num">2</td>
+  <td class="num">0</td>
+  <td class="num"><span class="pct-badge pct-low">0%</span></td>
+  <td style="font-size:10px;color:#555">Technicien (2)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">VINCI Facilities</td>
+  <td class="num">2</td>
+  <td class="num">0</td>
+  <td class="num"><span class="pct-badge pct-low">0%</span></td>
+  <td style="font-size:10px;color:#555">Technicien (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">KARUKERA METALLERIE</td>
+  <td class="num">7</td>
+  <td class="num">0</td>
+  <td class="num"><span class="pct-badge pct-low">0%</span></td>
+  <td style="font-size:10px;color:#555">Intervenant En Hauteur (6); Manager (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">MTC GAZ ANTILLES</td>
+  <td class="num">3</td>
+  <td class="num">0</td>
+  <td class="num"><span class="pct-badge pct-low">0%</span></td>
+  <td style="font-size:10px;color:#555">Technicien (2); Ouvrier Qualifié (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">SR AFFAIRES</td>
+  <td class="num">1</td>
+  <td class="num">0</td>
+  <td class="num"><span class="pct-badge pct-low">0%</span></td>
+  <td style="font-size:10px;color:#555">Digital_Ptw_Aa (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">TotalEnergies Mexico</td>
+  <td class="num">1</td>
+  <td class="num">0</td>
+  <td class="num"><span class="pct-badge pct-low">0%</span></td>
+  <td style="font-size:10px;color:#555"></td>
+</tr>
+<tr>
+  <td style="font-weight:600">TotalEnergies Republica Dominicana</td>
+  <td class="num">6</td>
+  <td class="num">0</td>
+  <td class="num"><span class="pct-badge pct-low">0%</span></td>
+  <td style="font-size:10px;color:#555"></td>
+</tr>
+<tr>
+  <td style="font-weight:600">PERSPECTIVE QSE</td>
+  <td class="num">1</td>
+  <td class="num">0</td>
+  <td class="num"><span class="pct-badge pct-low">0%</span></td>
+  <td style="font-size:10px;color:#555">Digital_Ptw_Aa (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">TotalEnergies Togo</td>
+  <td class="num">1</td>
+  <td class="num">0</td>
+  <td class="num"><span class="pct-badge pct-low">0%</span></td>
+  <td style="font-size:10px;color:#555"></td>
+</tr>
+<tr>
+  <td style="font-weight:600">PROGAZ CARAIBES</td>
+  <td class="num">2</td>
+  <td class="num">0</td>
+  <td class="num"><span class="pct-badge pct-low">0%</span></td>
+  <td style="font-size:10px;color:#555">Technicien (2)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">Bureau Veritas</td>
+  <td class="num">1</td>
+  <td class="num">0</td>
+  <td class="num"><span class="pct-badge pct-low">0%</span></td>
+  <td style="font-size:10px;color:#555"></td>
+</tr>
+<tr>
+  <td style="font-weight:600">AMAZONE INCENDIE</td>
+  <td class="num">3</td>
+  <td class="num">0</td>
+  <td class="num"><span class="pct-badge pct-low">0%</span></td>
+  <td style="font-size:10px;color:#555">Technicien (3)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">TotalEnergies France</td>
+  <td class="num">2</td>
+  <td class="num">0</td>
+  <td class="num"><span class="pct-badge pct-low">0%</span></td>
+  <td style="font-size:10px;color:#555">Translation_Key_Gerant_Totalenergies (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">Company Demo</td>
+  <td class="num">1</td>
+  <td class="num">0</td>
+  <td class="num"><span class="pct-badge pct-low">0%</span></td>
+  <td style="font-size:10px;color:#555"></td>
+</tr>
+<tr>
+  <td style="font-weight:600">TotalEnergies MAYOTTE</td>
+  <td class="num">1</td>
+  <td class="num">0</td>
+  <td class="num"><span class="pct-badge pct-low">0%</span></td>
+  <td style="font-size:10px;color:#555"></td>
+</tr>
+<tr>
+  <td style="font-weight:600">IZI SYSTEMS AFRICA</td>
+  <td class="num">1</td>
+  <td class="num">0</td>
+  <td class="num"><span class="pct-badge pct-low">0%</span></td>
+  <td style="font-size:10px;color:#555">Electricien (1)</td>
+</tr>
+<tr>
+  <td style="font-weight:600">TMF</td>
+  <td class="num">1</td>
+  <td class="num">0</td>
+  <td class="num"><span class="pct-badge pct-low">0%</span></td>
+  <td style="font-size:10px;color:#555"></td>
+</tr>
+<tr>
+  <td style="font-weight:600">MGEA</td>
+  <td class="num">6</td>
+  <td class="num">0</td>
+  <td class="num"><span class="pct-badge pct-low">0%</span></td>
+  <td style="font-size:10px;color:#555">Electricien (6)</td>
+</tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- ══════════════════════════════════════════ TAB 2 ══════ -->
+<div class="tab-content" id="tab2" style="display:none">
+  <div class="info-banner">Summary of changes required per local profile. Compliance = users with fully correct training / total users on that profile.</div>
+  <div class="search-bar">
+    <input type="text" placeholder="Search profile…" oninput="filterTable('t2',this.value)">
+    <select onchange="filterImpact('t2',this.value)">
+      <option value="">All Impact Levels</option>
+      <option value="High">High</option>
+      <option value="Medium">Medium</option>
+      <option value="Low">Low</option>
+      <option value="Aligned">Aligned</option>
+      <option value="Undefined">Undefined</option>
+    </select>
+  </div>
+  <div class="table-wrapper" style="max-height:calc(100vh - 260px);overflow-y:auto">
+    <table class="data-table" id="t2">
+      <thead>
+        <tr>
+          <th onclick="sortTable('t2',0)">Local Profile</th>
+          <th onclick="sortTable('t2',1)">HQ Profile</th>
+          <th onclick="sortTable('t2',2)">Nature</th>
+          <th onclick="sortTable('t2',3)" style="text-align:right">Users in Scope</th>
+          <th onclick="sortTable('t2',4)" style="min-width:140px">Compliance</th>
+          <th onclick="sortTable('t2',5)" style="text-align:right">Compliant</th>
+          <th onclick="sortTable('t2',6)" style="text-align:right">Non-Compliant</th>
+          <th onclick="sortTable('t2',7)" style="text-align:right">To Add</th>
+          <th onclick="sortTable('t2',8)" style="text-align:right">To Remove</th>
+        </tr>
+      </thead>
+      <tbody>
+<tr data-impact="Aligned">
+  <td style="font-weight:600">Intervenant En Hauteur</td>
+  <td>Intervenant travaux en hauteur</td>
+  <td style="font-size:10px;color:#555">Travaux en hauteur</td>
+  <td class="num">110</td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:19%;background:#DC2626"></div></div><span class="gauge-lbl">19%</span></div></td>
+  <td class="num text-green">21</td>
+  <td class="num text-red">89</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+</tr>
+<tr data-impact="Aligned">
+  <td style="font-weight:600">Technicien</td>
+  <td>Opérateur travaux</td>
+  <td style="font-size:10px;color:#555">Génie civil et autres travaux</td>
+  <td class="num">98</td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:28%;background:#DC2626"></div></div><span class="gauge-lbl">28%</span></div></td>
+  <td class="num text-green">27</td>
+  <td class="num text-red">71</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+</tr>
+<tr data-impact="Low">
+  <td style="font-weight:600">Électricien</td>
+  <td>Électricien</td>
+  <td style="font-size:10px;color:#555">Travaux sur système alimentés en énergie électrique</td>
+  <td class="num">65</td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:3%;background:#DC2626"></div></div><span class="gauge-lbl">3%</span></div></td>
+  <td class="num text-green">2</td>
+  <td class="num text-red">63</td>
+  <td class="num">—</td>
+  <td class="num">1</td>
+</tr>
+<tr data-impact="High">
+  <td style="font-weight:600">Intervenant En Zone Atex</td>
+  <td>Intervenant zone ATEX</td>
+  <td style="font-size:10px;color:#555">Travaux à chaud</td>
+  <td class="num">64</td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:23%;background:#DC2626"></div></div><span class="gauge-lbl">23%</span></div></td>
+  <td class="num text-green">15</td>
+  <td class="num text-red">49</td>
+  <td class="num">1</td>
+  <td class="num">1</td>
+</tr>
+<tr data-impact="High">
+  <td style="font-weight:600">Solarisation</td>
+  <td>Intervenant sur panneaux solaires</td>
+  <td style="font-size:10px;color:#555">Travaux sur système alimentés en énergie électrique</td>
+  <td class="num">60</td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:10%;background:#DC2626"></div></div><span class="gauge-lbl">10%</span></div></td>
+  <td class="num text-green">6</td>
+  <td class="num text-red">54</td>
+  <td class="num">1</td>
+  <td class="num">—</td>
+</tr>
+<tr data-impact="Medium">
+  <td style="font-weight:600">Superviseur</td>
+  <td>Superviseur contractant</td>
+  <td style="font-size:10px;color:#555">Contrôle - Supervision</td>
+  <td class="num">51</td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:6%;background:#DC2626"></div></div><span class="gauge-lbl">6%</span></div></td>
+  <td class="num text-green">3</td>
+  <td class="num text-red">48</td>
+  <td class="num">1</td>
+  <td class="num">—</td>
+</tr>
+<tr data-impact="Aligned">
+  <td style="font-weight:600">Ouvrier Qualifié</td>
+  <td>Opérateur travaux</td>
+  <td style="font-size:10px;color:#555">Génie civil et autres travaux</td>
+  <td class="num">47</td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:6%;background:#DC2626"></div></div><span class="gauge-lbl">6%</span></div></td>
+  <td class="num text-green">3</td>
+  <td class="num text-red">44</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+</tr>
+<tr data-impact="Low">
+  <td style="font-weight:600">Chef De Chantier</td>
+  <td>Chef de manœuvre levage</td>
+  <td style="font-size:10px;color:#555">Levage et manutention</td>
+  <td class="num">45</td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:11%;background:#DC2626"></div></div><span class="gauge-lbl">11%</span></div></td>
+  <td class="num text-green">5</td>
+  <td class="num text-red">40</td>
+  <td class="num">—</td>
+  <td class="num">6</td>
+</tr>
+<tr data-impact="Medium">
+  <td style="font-weight:600">Conducteur De Travaux</td>
+  <td>Chef de manœuvre levage</td>
+  <td style="font-size:10px;color:#555">Levage et manutention</td>
+  <td class="num">39</td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:10%;background:#DC2626"></div></div><span class="gauge-lbl">10%</span></div></td>
+  <td class="num text-green">4</td>
+  <td class="num text-red">35</td>
+  <td class="num">1</td>
+  <td class="num">1</td>
+</tr>
+<tr data-impact="High">
+  <td style="font-weight:600">Superviseur Totalenergies</td>
+  <td>Superviseur TE</td>
+  <td style="font-size:10px;color:#555">Contrôle - Supervision</td>
+  <td class="num">35</td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:20%;background:#DC2626"></div></div><span class="gauge-lbl">20%</span></div></td>
+  <td class="num text-green">7</td>
+  <td class="num text-red">28</td>
+  <td class="num">1</td>
+  <td class="num">—</td>
+</tr>
+<tr data-impact="Medium">
+  <td style="font-weight:600">Grutier Levageur</td>
+  <td>Grutier</td>
+  <td style="font-size:10px;color:#555">Levage et manutention</td>
+  <td class="num">26</td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:19%;background:#DC2626"></div></div><span class="gauge-lbl">19%</span></div></td>
+  <td class="num text-green">5</td>
+  <td class="num text-red">21</td>
+  <td class="num">1</td>
+  <td class="num">—</td>
+</tr>
+<tr data-impact="Medium">
+  <td style="font-weight:600">Conducteur De Nacelle</td>
+  <td>Conducteur/opérateur PEMP</td>
+  <td style="font-size:10px;color:#555">Travaux en hauteur</td>
+  <td class="num">20</td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:20%;background:#DC2626"></div></div><span class="gauge-lbl">20%</span></div></td>
+  <td class="num text-green">4</td>
+  <td class="num text-red">16</td>
+  <td class="num">3</td>
+  <td class="num">3</td>
+</tr>
+<tr data-impact="Aligned">
+  <td style="font-weight:600">Manoeuvre</td>
+  <td>Opérateur travaux</td>
+  <td style="font-size:10px;color:#555">Génie civil et autres travaux</td>
+  <td class="num">14</td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:14%;background:#DC2626"></div></div><span class="gauge-lbl">14%</span></div></td>
+  <td class="num text-green">2</td>
+  <td class="num text-red">12</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+</tr>
+<tr data-impact="Low">
+  <td style="font-weight:600">Maintenance Lavage</td>
+  <td>Intervenant travaux de levage</td>
+  <td style="font-size:10px;color:#555">Travaux de levage</td>
+  <td class="num">13</td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:23%;background:#DC2626"></div></div><span class="gauge-lbl">23%</span></div></td>
+  <td class="num text-green">3</td>
+  <td class="num text-red">10</td>
+  <td class="num">—</td>
+  <td class="num">2</td>
+</tr>
+<tr data-impact="Aligned">
+  <td style="font-weight:600">Chef De Manoeuvre</td>
+  <td>Chef de manœuvre levage</td>
+  <td style="font-size:10px;color:#555">Levage et manutention</td>
+  <td class="num">11</td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:9%;background:#DC2626"></div></div><span class="gauge-lbl">9%</span></div></td>
+  <td class="num text-green">1</td>
+  <td class="num text-red">10</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+</tr>
+<tr data-impact="Medium">
+  <td style="font-weight:600">Maintenance Extincteurs</td>
+  <td>Pompier</td>
+  <td style="font-size:10px;color:#555">Lutte contre incendie</td>
+  <td class="num">11</td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:45%;background:#F59E0B"></div></div><span class="gauge-lbl">45%</span></div></td>
+  <td class="num text-green">5</td>
+  <td class="num text-red">6</td>
+  <td class="num">1</td>
+  <td class="num">—</td>
+</tr>
+<tr data-impact="Medium">
+  <td style="font-weight:600">Soudeur</td>
+  <td>Soudeur</td>
+  <td style="font-size:10px;color:#555">Travaux à chaud</td>
+  <td class="num">10</td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:40%;background:#F59E0B"></div></div><span class="gauge-lbl">40%</span></div></td>
+  <td class="num text-green">4</td>
+  <td class="num text-red">6</td>
+  <td class="num">1</td>
+  <td class="num">—</td>
+</tr>
+<tr data-impact="Low">
+  <td style="font-weight:600">Monteur Echafaudage</td>
+  <td>Monteur/démonteur échafaudage</td>
+  <td style="font-size:10px;color:#555">Travaux en hauteur</td>
+  <td class="num">7</td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:14%;background:#DC2626"></div></div><span class="gauge-lbl">14%</span></div></td>
+  <td class="num text-green">1</td>
+  <td class="num text-red">6</td>
+  <td class="num">1</td>
+  <td class="num">1</td>
+</tr>
+<tr data-impact="Low">
+  <td style="font-weight:600">Conducteur Engin De Chantier</td>
+  <td>Conducteur d&#x27;engin d&#x27;excavation</td>
+  <td style="font-size:10px;color:#555">Travaux de fouille</td>
+  <td class="num">31</td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:0%;background:#DC2626"></div></div><span class="gauge-lbl">0%</span></div></td>
+  <td class="num text-green">0</td>
+  <td class="num text-red">31</td>
+  <td class="num">1</td>
+  <td class="num">3</td>
+</tr>
+<tr data-impact="Low">
+  <td style="font-weight:600">Élingueur</td>
+  <td>Élingueur</td>
+  <td style="font-size:10px;color:#555">Levage et manutention</td>
+  <td class="num">6</td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:0%;background:#DC2626"></div></div><span class="gauge-lbl">0%</span></div></td>
+  <td class="num text-green">0</td>
+  <td class="num text-red">6</td>
+  <td class="num">2</td>
+  <td class="num">1</td>
+</tr>
+<tr data-impact="Low">
+  <td style="font-weight:600">Génie Civil Aipr</td>
+  <td>Intervenant travaux de fouille</td>
+  <td style="font-size:10px;color:#555">Travaux de fouille</td>
+  <td class="num">4</td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:0%;background:#DC2626"></div></div><span class="gauge-lbl">0%</span></div></td>
+  <td class="num text-green">0</td>
+  <td class="num text-red">4</td>
+  <td class="num">3</td>
+  <td class="num">2</td>
+</tr>
+<tr data-impact="Low">
+  <td style="font-weight:600">Gerant Totalenergies</td>
+  <td>Superviseur TE</td>
+  <td style="font-size:10px;color:#555">Contrôle - Supervision</td>
+  <td class="num">96</td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:0%;background:#DC2626"></div></div><span class="gauge-lbl">0%</span></div></td>
+  <td class="num text-green">0</td>
+  <td class="num text-red">96</td>
+  <td class="num">1</td>
+  <td class="num">—</td>
+</tr>
+<tr data-impact="Low">
+  <td style="font-weight:600">Installateur Video Surveillance</td>
+  <td>Technicien télécom &amp; IT</td>
+  <td style="font-size:10px;color:#555">Installation télécom &amp; IT</td>
+  <td class="num">2</td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:0%;background:#DC2626"></div></div><span class="gauge-lbl">0%</span></div></td>
+  <td class="num text-green">0</td>
+  <td class="num text-red">2</td>
+  <td class="num">2</td>
+  <td class="num">2</td>
+</tr>
+<tr data-impact="Low">
+  <td style="font-weight:600">Intervenant Espace Confine</td>
+  <td>Intervenant en espace confiné</td>
+  <td style="font-size:10px;color:#555">Travaux en espace confiné</td>
+  <td class="num">2</td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:0%;background:#DC2626"></div></div><span class="gauge-lbl">0%</span></div></td>
+  <td class="num text-green">0</td>
+  <td class="num text-red">2</td>
+  <td class="num">1</td>
+  <td class="num">1</td>
+</tr>
+<tr data-impact="Medium">
+  <td style="font-weight:600">Maint Climatisation</td>
+  <td>Technicien HVAC</td>
+  <td style="font-size:10px;color:#555">Climatisation / Froid</td>
+  <td class="num">5</td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:100%;background:#16A34A"></div></div><span class="gauge-lbl">100%</span></div></td>
+  <td class="num text-green">5</td>
+  <td class="num text-red">0</td>
+  <td class="num">1</td>
+  <td class="num">2</td>
+</tr>
+<tr data-impact="Low">
+  <td style="font-weight:600">Maintenance Groupe Elec Compress</td>
+  <td>Technicien maintenance électromécanique</td>
+  <td style="font-size:10px;color:#555">Mécanique / Automatisation / Électrotechnique</td>
+  <td class="num">13</td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:0%;background:#DC2626"></div></div><span class="gauge-lbl">0%</span></div></td>
+  <td class="num text-green">0</td>
+  <td class="num text-red">13</td>
+  <td class="num">2</td>
+  <td class="num">1</td>
+</tr>
+<tr data-impact="Low">
+  <td style="font-weight:600">Nettoyage Hp</td>
+  <td>Opérateur haute pression</td>
+  <td style="font-size:10px;color:#555">Nettoyage HP</td>
+  <td class="num">22</td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:0%;background:#DC2626"></div></div><span class="gauge-lbl">0%</span></div></td>
+  <td class="num text-green">0</td>
+  <td class="num text-red">22</td>
+  <td class="num">1</td>
+  <td class="num">—</td>
+</tr>
+<tr data-impact="Aligned">
+  <td style="font-weight:600">Ouvrier Hautement Qualifié</td>
+  <td>Opérateur travaux</td>
+  <td style="font-size:10px;color:#555">Génie civil et autres travaux</td>
+  <td class="num">13</td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:0%;background:#DC2626"></div></div><span class="gauge-lbl">0%</span></div></td>
+  <td class="num text-green">0</td>
+  <td class="num text-red">13</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+</tr>
+<tr data-impact="Low">
+  <td style="font-weight:600">Telesurveillance</td>
+  <td>Technicien télécom &amp; IT</td>
+  <td style="font-size:10px;color:#555">Installation télécom &amp; IT</td>
+  <td class="num">4</td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:0%;background:#DC2626"></div></div><span class="gauge-lbl">0%</span></div></td>
+  <td class="num text-green">0</td>
+  <td class="num text-red">4</td>
+  <td class="num">5</td>
+  <td class="num">—</td>
+</tr>
+<tr data-impact="Low">
+  <td style="font-weight:600">Verificateur Echafaudage</td>
+  <td>vérificateur échafaudage</td>
+  <td style="font-size:10px;color:#555">Travaux en hauteur</td>
+  <td class="num">4</td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:0%;background:#DC2626"></div></div><span class="gauge-lbl">0%</span></div></td>
+  <td class="num text-green">0</td>
+  <td class="num text-red">4</td>
+  <td class="num">4</td>
+  <td class="num">—</td>
+</tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- ══════════════════════════════════════════ TAB 3 ══════ -->
+<div class="tab-content" id="tab3" style="display:none">
+  <div class="info-banner">Full gap analysis per profile. <span class="chip chip-add">To Add</span> = missing resource (red). <span class="chip chip-rem">To Remove</span> = excess resource (green).</div>
+  <div class="search-bar">
+    <input type="text" placeholder="Search profile…" oninput="filterTable('t3',this.value)">
+    <select onchange="filterImpact('t3',this.value)">
+      <option value="">All Impact Levels</option>
+      <option value="High">High</option>
+      <option value="Medium">Medium</option>
+      <option value="Low">Low</option>
+      <option value="Aligned">Aligned</option>
+      <option value="Undefined">Undefined</option>
+    </select>
+  </div>
+  <div class="table-wrapper" style="max-height:calc(100vh - 260px);overflow-y:auto">
+    <table class="data-table" id="t3">
+      <thead>
+        <tr>
+          <th onclick="sortTable('t3',0)">Local Profile</th>
+          <th onclick="sortTable('t3',1)">HQ Profile</th>
+          <th onclick="sortTable('t3',2)">Nature</th>
+          <th onclick="sortTable('t3',3)">Impact</th>
+          <th onclick="sortTable('t3',4)" style="min-width:140px">Compliance</th>
+          <th onclick="sortTable('t3',5)" style="text-align:right">Compliant</th>
+          <th onclick="sortTable('t3',6)" style="text-align:right">Non-Compliant</th>
+          <th onclick="sortTable('t3',7)">HQ E-learnings</th>
+          <th onclick="sortTable('t3',8)">Platform E-learnings</th>
+          <th onclick="sortTable('t3',9)">HQ Documents</th>
+          <th onclick="sortTable('t3',10)">Platform Documents</th>
+          <th onclick="sortTable('t3',11)">E-learnings to Add</th>
+          <th onclick="sortTable('t3',12)">Documents to Add</th>
+          <th onclick="sortTable('t3',13)">E-learnings to Remove</th>
+          <th onclick="sortTable('t3',14)">Documents to Remove</th>
+        </tr>
+      </thead>
+      <tbody>
+<tr data-impact="Aligned">
+  <td style="font-weight:600">Intervenant En Hauteur</td>
+  <td>Intervenant travaux en hauteur</td>
+  <td style="font-size:10px;color:#555">Travaux en hauteur</td>
+  <td><span class="badge badge-ok">Aligned</span></td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:19%;background:#DC2626"></div></div><span class="gauge-lbl">19%</span></div></td>
+  <td class="num text-green">21</td>
+  <td class="num text-red">89</td>
+  <td class="src-cell">comportements ; règles d&#x27 ; or ; équipements de protection ; travaux en hauteur</td>
+  <td class="src-cell">comportements ; équipements de protection ; règles d&#x27 ; or ; travaux en hauteur</td>
+  <td class="src-cell">document d&#x27 ; identité ; déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; habilitation travaux en hauteur</td>
+  <td class="src-cell">déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; document d&#x27 ; identité ; habilitation travaux en hauteur</td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+</tr>
+<tr data-impact="Aligned">
+  <td style="font-weight:600">Technicien</td>
+  <td>Opérateur travaux</td>
+  <td style="font-size:10px;color:#555">Génie civil et autres travaux</td>
+  <td><span class="badge badge-ok">Aligned</span></td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:28%;background:#DC2626"></div></div><span class="gauge-lbl">28%</span></div></td>
+  <td class="num text-green">27</td>
+  <td class="num text-red">71</td>
+  <td class="src-cell">comportements ; règles d&#x27 ; or ; équipements de protection</td>
+  <td class="src-cell">comportements ; équipements de protection ; règles d&#x27 ; or</td>
+  <td class="src-cell">document d&#x27 ; identité ; déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur</td>
+  <td class="src-cell">déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; document d&#x27 ; identité</td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+</tr>
+<tr data-impact="Low">
+  <td style="font-weight:600">Électricien</td>
+  <td>Électricien</td>
+  <td style="font-size:10px;color:#555">Travaux sur système alimentés en énergie électrique</td>
+  <td><span class="badge badge-low">Low</span></td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:3%;background:#DC2626"></div></div><span class="gauge-lbl">3%</span></div></td>
+  <td class="num text-green">2</td>
+  <td class="num text-red">63</td>
+  <td class="src-cell">comportements ; règles d&#x27 ; or ; équipements de protection ; consignation</td>
+  <td class="src-cell">comportements ; consignation ; équipements de protection ; règles d&#x27 ; or ; travaux en hauteur</td>
+  <td class="src-cell">document d&#x27 ; identité ; déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; habilitation travaux électriques</td>
+  <td class="src-cell">déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; document d&#x27 ; identité ; habilitation travaux électriques</td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="chip chip-rem">travaux en hauteur</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+</tr>
+<tr data-impact="High">
+  <td style="font-weight:600">Intervenant En Zone Atex</td>
+  <td>Intervenant zone ATEX</td>
+  <td style="font-size:10px;color:#555">Travaux à chaud</td>
+  <td><span class="badge badge-high">High</span></td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:23%;background:#DC2626"></div></div><span class="gauge-lbl">23%</span></div></td>
+  <td class="num text-green">15</td>
+  <td class="num text-red">49</td>
+  <td class="src-cell">comportements ; règles d&#x27 ; or ; équipements de protection ; travaux à chaud</td>
+  <td class="src-cell">comportements ; consignation ; équipements de protection ; règles d&#x27 ; or</td>
+  <td class="src-cell">document d&#x27 ; identité ; déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; habilitation zone atex</td>
+  <td class="src-cell">déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; document d&#x27 ; identité ; habilitation zone atex</td>
+  <td class="chips-cell"><span class="chip chip-add">travaux à chaud</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="chip chip-rem">consignation</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+</tr>
+<tr data-impact="High">
+  <td style="font-weight:600">Solarisation</td>
+  <td>Intervenant sur panneaux solaires</td>
+  <td style="font-size:10px;color:#555">Travaux sur système alimentés en énergie électrique</td>
+  <td><span class="badge badge-high">High</span></td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:10%;background:#DC2626"></div></div><span class="gauge-lbl">10%</span></div></td>
+  <td class="num text-green">6</td>
+  <td class="num text-red">54</td>
+  <td class="src-cell">comportements ; règles d&#x27 ; or ; équipements de protection ; consignation ; travaux en hauteur</td>
+  <td class="src-cell">comportements ; consignation ; équipements de protection ; règles d&#x27 ; or ; travaux en hauteur</td>
+  <td class="src-cell">document d&#x27 ; identité ; déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; habilitation travaux électriques</td>
+  <td class="src-cell">déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; document d&#x27 ; identité</td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="chip chip-add">habilitation travaux électriques</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+</tr>
+<tr data-impact="Medium">
+  <td style="font-weight:600">Superviseur</td>
+  <td>Superviseur contractant</td>
+  <td style="font-size:10px;color:#555">Contrôle - Supervision</td>
+  <td><span class="badge badge-med">Medium</span></td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:6%;background:#DC2626"></div></div><span class="gauge-lbl">6%</span></div></td>
+  <td class="num text-green">3</td>
+  <td class="num text-red">48</td>
+  <td class="src-cell">comportements ; règles d&#x27 ; or ; équipements de protection ; travaux en espace confiné ; consignation ; consignation mécanique ; travaux de fouille et d&#x27 ; excavation ; travaux en hauteur ; travaux à chaud ; opérations de levage ; gestion des travaux</td>
+  <td class="src-cell">comportements ; consignation ; équipements de protection ; gestion des travaux ; opérations de levage ; règles d&#x27 ; or ; travaux à chaud ; travaux de fouille et d&#x27 ; excavation ; travaux en espace confiné ; travaux en hauteur</td>
+  <td class="src-cell">document d&#x27 ; identité ; déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur</td>
+  <td class="src-cell">déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; document d&#x27 ; identité</td>
+  <td class="chips-cell"><span class="chip chip-add">consignation mécanique</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+</tr>
+<tr data-impact="Aligned">
+  <td style="font-weight:600">Ouvrier Qualifié</td>
+  <td>Opérateur travaux</td>
+  <td style="font-size:10px;color:#555">Génie civil et autres travaux</td>
+  <td><span class="badge badge-ok">Aligned</span></td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:6%;background:#DC2626"></div></div><span class="gauge-lbl">6%</span></div></td>
+  <td class="num text-green">3</td>
+  <td class="num text-red">44</td>
+  <td class="src-cell">comportements ; règles d&#x27 ; or ; équipements de protection</td>
+  <td class="src-cell">comportements ; équipements de protection ; règles d&#x27 ; or</td>
+  <td class="src-cell">document d&#x27 ; identité ; déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur</td>
+  <td class="src-cell">déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; document d&#x27 ; identité</td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+</tr>
+<tr data-impact="Low">
+  <td style="font-weight:600">Chef De Chantier</td>
+  <td>Chef de manœuvre levage</td>
+  <td style="font-size:10px;color:#555">Levage et manutention</td>
+  <td><span class="badge badge-low">Low</span></td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:11%;background:#DC2626"></div></div><span class="gauge-lbl">11%</span></div></td>
+  <td class="num text-green">5</td>
+  <td class="num text-red">40</td>
+  <td class="src-cell">comportements ; règles d&#x27 ; or ; équipements de protection ; opérations de levage</td>
+  <td class="src-cell">comportements ; consignation ; équipements de protection ; gestion des travaux ; opérations de levage ; règles d&#x27 ; or ; travaux à chaud ; travaux de fouille et d&#x27 ; excavation ; travaux en espace confiné ; travaux en hauteur</td>
+  <td class="src-cell">document d&#x27 ; identité ; déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur</td>
+  <td class="src-cell">déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; document d&#x27 ; identité</td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="chip chip-rem">consignation</span><span class="chip chip-rem">gestion des travaux</span><span class="chip chip-rem">travaux à chaud</span><span class="chip chip-rem">travaux de fouille et d&#x27;excavation</span><span class="chip chip-rem">travaux en espace confiné</span><span class="chip chip-rem">travaux en hauteur</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+</tr>
+<tr data-impact="Medium">
+  <td style="font-weight:600">Conducteur De Travaux</td>
+  <td>Chef de manœuvre levage</td>
+  <td style="font-size:10px;color:#555">Levage et manutention</td>
+  <td><span class="badge badge-med">Medium</span></td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:10%;background:#DC2626"></div></div><span class="gauge-lbl">10%</span></div></td>
+  <td class="num text-green">4</td>
+  <td class="num text-red">35</td>
+  <td class="src-cell">comportements ; règles d&#x27 ; or ; équipements de protection ; opérations de levage</td>
+  <td class="src-cell">comportements ; équipements de protection ; règles d&#x27 ; or ; travaux de fouille et d&#x27 ; excavation</td>
+  <td class="src-cell">document d&#x27 ; identité ; déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur</td>
+  <td class="src-cell">déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; document d&#x27 ; identité</td>
+  <td class="chips-cell"><span class="chip chip-add">opérations de levage</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="chip chip-rem">travaux de fouille et d&#x27;excavation</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+</tr>
+<tr data-impact="High">
+  <td style="font-weight:600">Superviseur Totalenergies</td>
+  <td>Superviseur TE</td>
+  <td style="font-size:10px;color:#555">Contrôle - Supervision</td>
+  <td><span class="badge badge-high">High</span></td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:20%;background:#DC2626"></div></div><span class="gauge-lbl">20%</span></div></td>
+  <td class="num text-green">7</td>
+  <td class="num text-red">28</td>
+  <td class="src-cell">comportements ; règles d&#x27 ; or ; équipements de protection ; travaux en espace confiné ; consignation ; consignation mécanique ; travaux de fouille et d&#x27 ; excavation ; travaux en hauteur ; travaux à chaud ; opérations de levage ; gestion des travaux</td>
+  <td class="src-cell">comportements ; consignation ; équipements de protection ; gestion des travaux ; opérations de levage ; règles d&#x27 ; or ; travaux à chaud ; travaux de fouille et d&#x27 ; excavation ; travaux en espace confiné ; travaux en hauteur</td>
+  <td class="src-cell">—</td>
+  <td class="src-cell">—</td>
+  <td class="chips-cell"><span class="chip chip-add">consignation mécanique</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+</tr>
+<tr data-impact="Medium">
+  <td style="font-weight:600">Grutier Levageur</td>
+  <td>Grutier</td>
+  <td style="font-size:10px;color:#555">Levage et manutention</td>
+  <td><span class="badge badge-med">Medium</span></td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:19%;background:#DC2626"></div></div><span class="gauge-lbl">19%</span></div></td>
+  <td class="num text-green">5</td>
+  <td class="num text-red">21</td>
+  <td class="src-cell">comportements ; règles d&#x27 ; or ; équipements de protection ; opérations de levage</td>
+  <td class="src-cell">comportements ; équipements de protection ; opérations de levage ; règles d&#x27 ; or</td>
+  <td class="src-cell">document d&#x27 ; identité ; déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; caces ou équivalent grue</td>
+  <td class="src-cell">déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; document d&#x27 ; identité</td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="chip chip-add">caces ou équivalent grue</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+</tr>
+<tr data-impact="Medium">
+  <td style="font-weight:600">Conducteur De Nacelle</td>
+  <td>Conducteur/opérateur PEMP</td>
+  <td style="font-size:10px;color:#555">Travaux en hauteur</td>
+  <td><span class="badge badge-med">Medium</span></td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:20%;background:#DC2626"></div></div><span class="gauge-lbl">20%</span></div></td>
+  <td class="num text-green">4</td>
+  <td class="num text-red">16</td>
+  <td class="src-cell">comportements ; règles d&#x27 ; or ; équipements de protection ; travaux en hauteur</td>
+  <td class="src-cell">comportements ; équipements de protection ; règles d&#x27 ; or</td>
+  <td class="src-cell">document d&#x27 ; identité ; déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; habilitation pemp</td>
+  <td class="src-cell">autorisation de conduite ; caces r486 r489 ; document d&#x27 ; identité ; habilitation travaux électriques</td>
+  <td class="chips-cell"><span class="chip chip-add">travaux en hauteur</span></td>
+  <td class="chips-cell"><span class="chip chip-add">déclaration d&#x27;aptitude médicale par l&#x27;employeur</span><span class="chip chip-add">habilitation pemp</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="chip chip-rem">autorisation de conduite</span><span class="chip chip-rem">caces r486 r489</span><span class="chip chip-rem">habilitation travaux électriques</span></td>
+</tr>
+<tr data-impact="Aligned">
+  <td style="font-weight:600">Manoeuvre</td>
+  <td>Opérateur travaux</td>
+  <td style="font-size:10px;color:#555">Génie civil et autres travaux</td>
+  <td><span class="badge badge-ok">Aligned</span></td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:14%;background:#DC2626"></div></div><span class="gauge-lbl">14%</span></div></td>
+  <td class="num text-green">2</td>
+  <td class="num text-red">12</td>
+  <td class="src-cell">comportements ; règles d&#x27 ; or ; équipements de protection</td>
+  <td class="src-cell">comportements ; équipements de protection ; règles d&#x27 ; or</td>
+  <td class="src-cell">document d&#x27 ; identité ; déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur</td>
+  <td class="src-cell">déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; document d&#x27 ; identité</td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+</tr>
+<tr data-impact="Low">
+  <td style="font-weight:600">Maintenance Lavage</td>
+  <td>Intervenant travaux de levage</td>
+  <td style="font-size:10px;color:#555">Travaux de levage</td>
+  <td><span class="badge badge-low">Low</span></td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:23%;background:#DC2626"></div></div><span class="gauge-lbl">23%</span></div></td>
+  <td class="num text-green">3</td>
+  <td class="num text-red">10</td>
+  <td class="src-cell">comportements ; règles d&#x27 ; or ; équipements de protection ; opérations de levage</td>
+  <td class="src-cell">comportements ; consignation ; équipements de protection ; opérations de levage ; règles d&#x27 ; or ; travaux en hauteur</td>
+  <td class="src-cell">document d&#x27 ; identité ; déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur</td>
+  <td class="src-cell">déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; document d&#x27 ; identité</td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="chip chip-rem">consignation</span><span class="chip chip-rem">travaux en hauteur</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+</tr>
+<tr data-impact="Aligned">
+  <td style="font-weight:600">Chef De Manoeuvre</td>
+  <td>Chef de manœuvre levage</td>
+  <td style="font-size:10px;color:#555">Levage et manutention</td>
+  <td><span class="badge badge-ok">Aligned</span></td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:9%;background:#DC2626"></div></div><span class="gauge-lbl">9%</span></div></td>
+  <td class="num text-green">1</td>
+  <td class="num text-red">10</td>
+  <td class="src-cell">comportements ; règles d&#x27 ; or ; équipements de protection ; opérations de levage</td>
+  <td class="src-cell">comportements ; équipements de protection ; opérations de levage ; règles d&#x27 ; or</td>
+  <td class="src-cell">document d&#x27 ; identité ; déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur</td>
+  <td class="src-cell">déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; document d&#x27 ; identité</td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+</tr>
+<tr data-impact="Medium">
+  <td style="font-weight:600">Maintenance Extincteurs</td>
+  <td>Pompier</td>
+  <td style="font-size:10px;color:#555">Lutte contre incendie</td>
+  <td><span class="badge badge-med">Medium</span></td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:45%;background:#F59E0B"></div></div><span class="gauge-lbl">45%</span></div></td>
+  <td class="num text-green">5</td>
+  <td class="num text-red">6</td>
+  <td class="src-cell">comportements ; règles d&#x27 ; or ; équipements de protection</td>
+  <td class="src-cell">comportements ; équipements de protection ; règles d&#x27 ; or</td>
+  <td class="src-cell">document d&#x27 ; identité ; déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; formation spécialisée pompier</td>
+  <td class="src-cell">déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; document d&#x27 ; identité</td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="chip chip-add">formation spécialisée pompier</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+</tr>
+<tr data-impact="Medium">
+  <td style="font-weight:600">Soudeur</td>
+  <td>Soudeur</td>
+  <td style="font-size:10px;color:#555">Travaux à chaud</td>
+  <td><span class="badge badge-med">Medium</span></td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:40%;background:#F59E0B"></div></div><span class="gauge-lbl">40%</span></div></td>
+  <td class="num text-green">4</td>
+  <td class="num text-red">6</td>
+  <td class="src-cell">comportements ; règles d&#x27 ; or ; équipements de protection ; travaux à chaud</td>
+  <td class="src-cell">comportements ; équipements de protection ; règles d&#x27 ; or ; travaux à chaud</td>
+  <td class="src-cell">document d&#x27 ; identité ; déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; habilitation soudeur</td>
+  <td class="src-cell">déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; document d&#x27 ; identité</td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="chip chip-add">habilitation soudeur</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+</tr>
+<tr data-impact="Low">
+  <td style="font-weight:600">Monteur Echafaudage</td>
+  <td>Monteur/démonteur échafaudage</td>
+  <td style="font-size:10px;color:#555">Travaux en hauteur</td>
+  <td><span class="badge badge-low">Low</span></td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:14%;background:#DC2626"></div></div><span class="gauge-lbl">14%</span></div></td>
+  <td class="num text-green">1</td>
+  <td class="num text-red">6</td>
+  <td class="src-cell">comportements ; règles d&#x27 ; or ; équipements de protection ; travaux en hauteur</td>
+  <td class="src-cell">comportements ; équipements de protection ; règles d&#x27 ; or ; travaux en hauteur</td>
+  <td class="src-cell">document d&#x27 ; identité ; déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; habilitation monteur/ démonteur échafaudage</td>
+  <td class="src-cell">déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; document d&#x27 ; identité ; habilitation montage echafaudage</td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="chip chip-add">habilitation monteur/ démonteur échafaudage</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="chip chip-rem">habilitation montage echafaudage</span></td>
+</tr>
+<tr data-impact="Low">
+  <td style="font-weight:600">Conducteur Engin De Chantier</td>
+  <td>Conducteur d&#x27;engin d&#x27;excavation</td>
+  <td style="font-size:10px;color:#555">Travaux de fouille</td>
+  <td><span class="badge badge-low">Low</span></td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:0%;background:#DC2626"></div></div><span class="gauge-lbl">0%</span></div></td>
+  <td class="num text-green">0</td>
+  <td class="num text-red">31</td>
+  <td class="src-cell">comportements ; règles d&#x27 ; or ; équipements de protection ; travaux de fouille et d&#x27 ; excavation</td>
+  <td class="src-cell">comportements ; équipements de protection ; règles d&#x27 ; or ; travaux de fouille et d&#x27 ; excavation</td>
+  <td class="src-cell">document d&#x27 ; identité ; déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; habilitation engin de chantier</td>
+  <td class="src-cell">attestation aipr prox réseau ; autorisation de conduite ; caces r486 r489 ; déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; document d&#x27 ; identité</td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="chip chip-add">habilitation engin de chantier</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="chip chip-rem">attestation aipr prox réseau</span><span class="chip chip-rem">autorisation de conduite</span><span class="chip chip-rem">caces r486 r489</span></td>
+</tr>
+<tr data-impact="Low">
+  <td style="font-weight:600">Élingueur</td>
+  <td>Élingueur</td>
+  <td style="font-size:10px;color:#555">Levage et manutention</td>
+  <td><span class="badge badge-low">Low</span></td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:0%;background:#DC2626"></div></div><span class="gauge-lbl">0%</span></div></td>
+  <td class="num text-green">0</td>
+  <td class="num text-red">6</td>
+  <td class="src-cell">comportements ; règles d&#x27 ; or ; équipements de protection ; opérations de levage</td>
+  <td class="src-cell">comportements ; équipements de protection ; opérations de levage ; règles d&#x27 ; or</td>
+  <td class="src-cell">document d&#x27 ; identité ; déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; formation spécialisée elingueur</td>
+  <td class="src-cell">document d&#x27 ; identité ; habilitation travaux en hauteur</td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="chip chip-add">déclaration d&#x27;aptitude médicale par l&#x27;employeur</span><span class="chip chip-add">formation spécialisée elingueur</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="chip chip-rem">habilitation travaux en hauteur</span></td>
+</tr>
+<tr data-impact="Low">
+  <td style="font-weight:600">Génie Civil Aipr</td>
+  <td>Intervenant travaux de fouille</td>
+  <td style="font-size:10px;color:#555">Travaux de fouille</td>
+  <td><span class="badge badge-low">Low</span></td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:0%;background:#DC2626"></div></div><span class="gauge-lbl">0%</span></div></td>
+  <td class="num text-green">0</td>
+  <td class="num text-red">4</td>
+  <td class="src-cell">comportements ; règles d&#x27 ; or ; équipements de protection ; travaux de fouille et d&#x27 ; excavation</td>
+  <td class="src-cell">comportements ; consignation ; équipements de protection ; règles d&#x27 ; or</td>
+  <td class="src-cell">document d&#x27 ; identité ; déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur</td>
+  <td class="src-cell">autorisation d&#x27 ; interventions à proximité des réseaux</td>
+  <td class="chips-cell"><span class="chip chip-add">travaux de fouille et d&#x27;excavation</span></td>
+  <td class="chips-cell"><span class="chip chip-add">document d&#x27;identité</span><span class="chip chip-add">déclaration d&#x27;aptitude médicale par l&#x27;employeur</span></td>
+  <td class="chips-cell"><span class="chip chip-rem">consignation</span></td>
+  <td class="chips-cell"><span class="chip chip-rem">autorisation d&#x27;interventions à proximité des réseaux</span></td>
+</tr>
+<tr data-impact="Low">
+  <td style="font-weight:600">Gerant Totalenergies</td>
+  <td>Superviseur TE</td>
+  <td style="font-size:10px;color:#555">Contrôle - Supervision</td>
+  <td><span class="badge badge-low">Low</span></td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:0%;background:#DC2626"></div></div><span class="gauge-lbl">0%</span></div></td>
+  <td class="num text-green">0</td>
+  <td class="num text-red">96</td>
+  <td class="src-cell">comportements ; règles d&#x27 ; or ; équipements de protection ; travaux en espace confiné ; consignation ; consignation mécanique ; travaux de fouille et d&#x27 ; excavation ; travaux en hauteur ; travaux à chaud ; opérations de levage ; gestion des travaux</td>
+  <td class="src-cell">comportements ; consignation ; équipements de protection ; gestion des travaux ; opérations de levage ; règles d&#x27 ; or ; travaux à chaud ; travaux de fouille et d&#x27 ; excavation ; travaux en espace confiné ; travaux en hauteur</td>
+  <td class="src-cell">—</td>
+  <td class="src-cell">—</td>
+  <td class="chips-cell"><span class="chip chip-add">consignation mécanique</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+</tr>
+<tr data-impact="Low">
+  <td style="font-weight:600">Installateur Video Surveillance</td>
+  <td>Technicien télécom &amp; IT</td>
+  <td style="font-size:10px;color:#555">Installation télécom &amp; IT</td>
+  <td><span class="badge badge-low">Low</span></td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:0%;background:#DC2626"></div></div><span class="gauge-lbl">0%</span></div></td>
+  <td class="num text-green">0</td>
+  <td class="num text-red">2</td>
+  <td class="src-cell">comportements ; règles d&#x27 ; or ; équipements de protection ; consignation</td>
+  <td class="src-cell">comportements ; équipements de protection ; règles d&#x27 ; or ; travaux en hauteur</td>
+  <td class="src-cell">document d&#x27 ; identité ; déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; habilitation travaux électriques</td>
+  <td class="src-cell">déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; document d&#x27 ; identité ; habilitation travaux en hauteur</td>
+  <td class="chips-cell"><span class="chip chip-add">consignation</span></td>
+  <td class="chips-cell"><span class="chip chip-add">habilitation travaux électriques</span></td>
+  <td class="chips-cell"><span class="chip chip-rem">travaux en hauteur</span></td>
+  <td class="chips-cell"><span class="chip chip-rem">habilitation travaux en hauteur</span></td>
+</tr>
+<tr data-impact="Low">
+  <td style="font-weight:600">Intervenant Espace Confine</td>
+  <td>Intervenant en espace confiné</td>
+  <td style="font-size:10px;color:#555">Travaux en espace confiné</td>
+  <td><span class="badge badge-low">Low</span></td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:0%;background:#DC2626"></div></div><span class="gauge-lbl">0%</span></div></td>
+  <td class="num text-green">0</td>
+  <td class="num text-red">2</td>
+  <td class="src-cell">comportements ; règles d&#x27 ; or ; équipements de protection ; travaux en espace confiné</td>
+  <td class="src-cell">comportements ; équipements de protection ; règles d&#x27 ; or ; travaux en espace confiné</td>
+  <td class="src-cell">document d&#x27 ; identité ; déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; habilitation travaux en espace confine</td>
+  <td class="src-cell">attestation au port du masque ari ; déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; document d&#x27 ; identité</td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="chip chip-add">habilitation travaux en espace confine</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="chip chip-rem">attestation au port du masque ari</span></td>
+</tr>
+<tr data-impact="Medium">
+  <td style="font-weight:600">Maint Climatisation</td>
+  <td>Technicien HVAC</td>
+  <td style="font-size:10px;color:#555">Climatisation / Froid</td>
+  <td><span class="badge badge-med">Medium</span></td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:100%;background:#16A34A"></div></div><span class="gauge-lbl">100%</span></div></td>
+  <td class="num text-green">5</td>
+  <td class="num text-red">0</td>
+  <td class="src-cell">comportements ; règles d&#x27 ; or ; équipements de protection ; consignation ; travaux en hauteur</td>
+  <td class="src-cell">comportements ; consignation ; équipements de protection ; opérations de levage ; règles d&#x27 ; or ; travaux à chaud ; travaux en hauteur</td>
+  <td class="src-cell">document d&#x27 ; identité ; déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; habilitation travaux électriques</td>
+  <td class="src-cell">déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; document d&#x27 ; identité</td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="chip chip-add">habilitation travaux électriques</span></td>
+  <td class="chips-cell"><span class="chip chip-rem">opérations de levage</span><span class="chip chip-rem">travaux à chaud</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+</tr>
+<tr data-impact="Low">
+  <td style="font-weight:600">Maintenance Groupe Elec Compress</td>
+  <td>Technicien maintenance électromécanique</td>
+  <td style="font-size:10px;color:#555">Mécanique / Automatisation / Électrotechnique</td>
+  <td><span class="badge badge-low">Low</span></td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:0%;background:#DC2626"></div></div><span class="gauge-lbl">0%</span></div></td>
+  <td class="num text-green">0</td>
+  <td class="num text-red">13</td>
+  <td class="src-cell">comportements ; règles d&#x27 ; or ; équipements de protection ; consignation ; consignation mécanique</td>
+  <td class="src-cell">comportements ; consignation ; équipements de protection ; opérations de levage ; règles d&#x27 ; or</td>
+  <td class="src-cell">document d&#x27 ; identité ; déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; habilitation travaux électriques</td>
+  <td class="src-cell">déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; document d&#x27 ; identité</td>
+  <td class="chips-cell"><span class="chip chip-add">consignation mécanique</span></td>
+  <td class="chips-cell"><span class="chip chip-add">habilitation travaux électriques</span></td>
+  <td class="chips-cell"><span class="chip chip-rem">opérations de levage</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+</tr>
+<tr data-impact="Low">
+  <td style="font-weight:600">Nettoyage Hp</td>
+  <td>Opérateur haute pression</td>
+  <td style="font-size:10px;color:#555">Nettoyage HP</td>
+  <td><span class="badge badge-low">Low</span></td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:0%;background:#DC2626"></div></div><span class="gauge-lbl">0%</span></div></td>
+  <td class="num text-green">0</td>
+  <td class="num text-red">22</td>
+  <td class="src-cell">comportements ; règles d&#x27 ; or ; équipements de protection ; travaux à chaud</td>
+  <td class="src-cell">comportements ; équipements de protection ; règles d&#x27 ; or</td>
+  <td class="src-cell">document d&#x27 ; identité ; déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur</td>
+  <td class="src-cell">déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; document d&#x27 ; identité</td>
+  <td class="chips-cell"><span class="chip chip-add">travaux à chaud</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+</tr>
+<tr data-impact="Aligned">
+  <td style="font-weight:600">Ouvrier Hautement Qualifié</td>
+  <td>Opérateur travaux</td>
+  <td style="font-size:10px;color:#555">Génie civil et autres travaux</td>
+  <td><span class="badge badge-ok">Aligned</span></td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:0%;background:#DC2626"></div></div><span class="gauge-lbl">0%</span></div></td>
+  <td class="num text-green">0</td>
+  <td class="num text-red">13</td>
+  <td class="src-cell">comportements ; règles d&#x27 ; or ; équipements de protection</td>
+  <td class="src-cell">comportements ; équipements de protection ; règles d&#x27 ; or</td>
+  <td class="src-cell">document d&#x27 ; identité ; déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur</td>
+  <td class="src-cell">déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; document d&#x27 ; identité</td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+</tr>
+<tr data-impact="Low">
+  <td style="font-weight:600">Telesurveillance</td>
+  <td>Technicien télécom &amp; IT</td>
+  <td style="font-size:10px;color:#555">Installation télécom &amp; IT</td>
+  <td><span class="badge badge-low">Low</span></td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:0%;background:#DC2626"></div></div><span class="gauge-lbl">0%</span></div></td>
+  <td class="num text-green">0</td>
+  <td class="num text-red">4</td>
+  <td class="src-cell">comportements ; règles d&#x27 ; or ; équipements de protection ; consignation</td>
+  <td class="src-cell">—</td>
+  <td class="src-cell">document d&#x27 ; identité ; déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; habilitation travaux électriques</td>
+  <td class="src-cell">déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; document d&#x27 ; identité</td>
+  <td class="chips-cell"><span class="chip chip-add">comportements</span><span class="chip chip-add">règles d&#x27;or</span><span class="chip chip-add">équipements de protection</span><span class="chip chip-add">consignation</span></td>
+  <td class="chips-cell"><span class="chip chip-add">habilitation travaux électriques</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+</tr>
+<tr data-impact="Low">
+  <td style="font-weight:600">Verificateur Echafaudage</td>
+  <td>vérificateur échafaudage</td>
+  <td style="font-size:10px;color:#555">Travaux en hauteur</td>
+  <td><span class="badge badge-low">Low</span></td>
+  <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:0%;background:#DC2626"></div></div><span class="gauge-lbl">0%</span></div></td>
+  <td class="num text-green">0</td>
+  <td class="num text-red">4</td>
+  <td class="src-cell">comportements ; règles d&#x27 ; or ; équipements de protection ; travaux en hauteur</td>
+  <td class="src-cell">comportements ; équipements de protection ; règles d&#x27 ; or</td>
+  <td class="src-cell">document d&#x27 ; identité ; déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur</td>
+  <td class="src-cell">déclaration d&#x27 ; aptitude médicale par l&#x27 ; employeur ; document d&#x27 ; identité ; habilitation vérificateur échafaudage</td>
+  <td class="chips-cell"><span class="chip chip-add">travaux en hauteur</span></td>
+  <td class="chips-cell"><span class="chip chip-add">comportements</span><span class="chip chip-add">équipements de protection</span><span class="chip chip-add">règles d&#x27;or</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+  <td class="chips-cell"><span class="none-chip">—</span></td>
+</tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- TAB 4 - SYNTHESE -->
+<div class="tab-content" id="tab4" style="display:none">
+<div class="synth-wrap">
+  <div class="synth-card">
+    <div class="synth-card-title">Synthèse — Harmonisation des profils | Antilles Guyane</div>
+    <p style="font-weight:700;font-size:14px;color:#1C2E5C;margin-bottom:10px">&#x1F534; Profils prioritaires — utilisateurs conformes à risque</p>
+    <p style="font-size:12px;color:#6B7280;margin-bottom:12px">Ces profils ont des ressources <strong>à ajouter</strong> : les utilisateurs actuellement conformes perdront leur conformité dès que ces ressources seront ajoutées.</p>
+    <div class="synth-profile-row">
+      <div class="synth-profile-name">Intervenant En Zone Atex<br><span style="font-weight:400;font-size:11px;color:#6B7280">→ Intervenant zone ATEX</span></div>
+      <div class="synth-profile-detail"><span class="synth-tag tag-urgent">15 conformes impactés</span> E-learning <strong>travaux à chaud</strong> à ajouter.</div>
+    </div>
+    <div class="synth-profile-row">
+      <div class="synth-profile-name">Superviseur TotalEnergies<br><span style="font-weight:400;font-size:11px;color:#6B7280">→ Superviseur TE</span></div>
+      <div class="synth-profile-detail"><span class="synth-tag tag-urgent">7 conformes impactés</span> E-learning <strong>consignation mécanique</strong> à ajouter.</div>
+    </div>
+    <div class="synth-profile-row">
+      <div class="synth-profile-name">Solarisation<br><span style="font-weight:400;font-size:11px;color:#6B7280">→ Intervenant sur panneaux solaires</span></div>
+      <div class="synth-profile-detail"><span class="synth-tag tag-urgent">6 conformes impactés</span> Document <strong>habilitation travaux électriques</strong> à ajouter.</div>
+    </div>
+    <div class="synth-profile-row">
+      <div class="synth-profile-name">Maintenance Extincteurs<br><span style="font-weight:400;font-size:11px;color:#6B7280">→ Pompier</span></div>
+      <div class="synth-profile-detail"><span class="synth-tag tag-urgent">5 conformes impactés</span> Document <strong>formation spécialisée pompier</strong> à ajouter.</div>
+    </div>
+    <div class="synth-profile-row">
+      <div class="synth-profile-name">Maint Climatisation<br><span style="font-weight:400;font-size:11px;color:#6B7280">→ Technicien HVAC · 100% actuellement</span></div>
+      <div class="synth-profile-detail"><span class="synth-tag tag-urgent">5 conformes impactés</span> Document <strong>habilitation travaux électriques</strong> à ajouter.</div>
+    </div>
+    <div class="synth-profile-row">
+      <div class="synth-profile-name">Grutier Levageur<br><span style="font-weight:400;font-size:11px;color:#6B7280">→ Grutier</span></div>
+      <div class="synth-profile-detail"><span class="synth-tag tag-urgent">5 conformes impactés</span> Document <strong>CACES ou équivalent grue</strong> à ajouter.</div>
+    </div>
+    <div class="synth-profile-row">
+      <div class="synth-profile-name">Conducteur De Nacelle<br><span style="font-weight:400;font-size:11px;color:#6B7280">→ Conducteur/opérateur PEMP</span></div>
+      <div class="synth-profile-detail"><span class="synth-tag tag-urgent">4 conformes impactés</span> E-learning <strong>travaux en hauteur</strong> + habilitation PEMP + déclaration d&apos;aptitude à ajouter.</div>
+    </div>
+    <div class="synth-profile-row">
+      <div class="synth-profile-name">Soudeur<br><span style="font-weight:400;font-size:11px;color:#6B7280">→ Soudeur</span></div>
+      <div class="synth-profile-detail"><span class="synth-tag tag-urgent">4 conformes impactés</span> Document <strong>habilitation soudeur</strong> à ajouter.</div>
+    </div>
+    <div class="synth-profile-row">
+      <div class="synth-profile-name">Superviseur<br><span style="font-weight:400;font-size:11px;color:#6B7280">→ Superviseur contractant</span></div>
+      <div class="synth-profile-detail"><span class="synth-tag tag-urgent">3 conformes impactés</span> E-learning <strong>consignation mécanique</strong> à ajouter.</div>
+    </div>
+  </div>
+  <div class="synth-card">
+    <div class="synth-card-title">&#x1F7E1; Points en attente de validation</div>
+    <div class="synth-pending-item"><strong>1. Conducteur de nacelle</strong>Peut-on remplacer le CACES r486/r489 par l&apos;Habilitation PEMP ?</div>
+    <div class="synth-pending-item"><strong>2. Conducteur engin de chantier / Génie civil AIPR / Intervenant espace confiné</strong>Les documents présents sur la plateforme mais absents du profil HQ sont-ils à supprimer ou conserver localement ?</div>
+    <div class="synth-pending-item"><strong>3. Maintenance extincteurs</strong>Le profil <em>Pompier</em> est-il adapté, ou préférez-vous le profil <em>Technicien maintenance</em> ?</div>
+    <div class="synth-pending-item" style="border-left-color:#16A34A;background:#F0FDF4"><strong style="color:#15803D">4. Monteur échafaudage — Aucune suppression nécessaire</strong>Renommer uniquement : <em>habilitation montage échafaudage</em> → <em>habilitation monteur/démonteur échafaudage</em>.</div>
+    <div class="synth-pending-item" style="border-left-color:#16A34A;background:#F0FDF4"><strong style="color:#15803D">5. Télésurveillance</strong>Le profil sera remplacé. Les utilisateurs concernés pourront se voir attribuer le profil <em>Intervenant en hauteur</em>.</div>
+    <div class="synth-footer">&#x2705; <strong>Statut global :</strong> Les 30 profils sont au statut <strong>Prêt</strong>. Les actions peuvent être mises en œuvre dès confirmation sur les points ci-dessus.</div>
+  </div>
+</div>
+</div>
+
+<script>
+function switchTab(n){
+  var tabs = document.querySelectorAll('.tab-content');
+  var btns = document.querySelectorAll('.tab-btn');
+  tabs.forEach(function(t,i){ t.style.display = i===n ? 'block' : 'none'; });
+  btns.forEach(function(b,i){ b.classList.toggle('active', i===n); });
+}
+function filterTable(tableId, q){
+  var rows = document.querySelectorAll('#'+tableId+' tbody tr');
+  var lq = q.toLowerCase();
+  rows.forEach(function(r){ r.style.display = r.textContent.toLowerCase().includes(lq) ? '' : 'none'; });
+}
+function filterImpact(tableId, val){
+  var rows = document.querySelectorAll('#'+tableId+' tbody tr');
+  rows.forEach(function(r){
+    var imp = r.getAttribute('data-impact') || '';
+    r.style.display = (!val || imp===val) ? '' : 'none';
+  });
+}
+var sortDirs = {};
+function sortTable(tableId, col){
+  var tbody = document.querySelector('#'+tableId+' tbody');
+  var rows = Array.from(tbody.querySelectorAll('tr'));
+  var key = tableId+'_'+col;
+  var asc = !sortDirs[key]; sortDirs[key] = asc;
+  rows.sort(function(a,b){
+    var av = a.cells[col] ? a.cells[col].textContent.trim() : '';
+    var bv = b.cells[col] ? b.cells[col].textContent.trim() : '';
+    var an = parseFloat(av), bn = parseFloat(bv);
+    if(!isNaN(an)&&!isNaN(bn)) return asc ? an-bn : bn-an;
+    return asc ? av.localeCompare(bv) : bv.localeCompare(av);
+  });
+  rows.forEach(function(r){ tbody.appendChild(r); });
+}
+</script>
+</body>
+</html>
