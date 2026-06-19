@@ -1,4 +1,3 @@
-
 <uploaded_files>
 <file><file_path>C:\Users\zoro\AppData\Roaming\Claude\local-agent-mode-sessions\4170d86d-55a5-440c-a4c1-8230c818fb1e\32d3c2ec-eb01-4ccf-9757-c3ecbc04ec86\local_a120f62a-d13c-4828-bd41-951cde98a1ad\uploads\Harmonisation Antilles Guyane - Analyse détaillée.csv</file_path><file_uuid>acc581e6-5d54-42e9-a0d9-16c1b22e825a</file_uuid></file>
 </uploaded_files>
@@ -94,18 +93,10 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
 /* ── Section info banner ── */
 .info-banner{background:#EBF0FF;border-left:4px solid #2F5496;border-radius:0 8px 8px 0;padding:10px 16px;font-size:12px;color:#1C2E5C;margin-bottom:16px;line-height:1.6}
 
-/* ── Synthèse Email styles ── */
+/* ── Synthèse styles ── */
 .synth-wrap{max-width:780px;margin:0 auto}
-.synth-card{background:white;border-radius:12px;border:1px solid #E5E7EB;padding:28px 32px;margin-bottom:20px;position:relative}
+.synth-card{background:white;border-radius:12px;border:1px solid #E5E7EB;padding:28px 32px;margin-bottom:20px}
 .synth-card-title{font-size:13px;font-weight:700;color:#1C2E5C;text-transform:uppercase;letter-spacing:.05em;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid #EBF0FF}
-.synth-meta{font-size:12px;color:#6B7280;margin-bottom:6px}
-.synth-meta strong{color:#111827}
-.synth-subject{background:#1C2E5C;color:white;border-radius:8px;padding:10px 16px;font-size:13px;font-weight:600;margin-bottom:20px}
-.synth-kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:4px}
-.synth-kpi{background:#F8FAFC;border:1px solid #E5E7EB;border-radius:8px;padding:12px 14px;text-align:center}
-.synth-kpi-val{font-size:24px;font-weight:700;color:#1C2E5C}
-.synth-kpi-val.red{color:#DC2626}
-.synth-kpi-lbl{font-size:11px;color:#6B7280;margin-top:2px}
 .synth-profile-row{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid #F3F4F6}
 .synth-profile-row:last-child{border-bottom:none}
 .synth-profile-name{font-weight:700;font-size:13px;color:#111827;min-width:220px}
@@ -116,9 +107,6 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
 .synth-pending-item{background:#FFFBEB;border-left:3px solid #F59E0B;border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:10px;font-size:12px;line-height:1.6}
 .synth-pending-item strong{color:#92400E;display:block;margin-bottom:2px}
 .synth-footer{background:#F0F4FF;border-radius:8px;padding:12px 16px;font-size:12px;color:#1C2E5C;margin-top:4px}
-.copy-btn{position:absolute;top:18px;right:20px;background:#EBF0FF;border:none;border-radius:6px;padding:5px 12px;font-size:11px;font-weight:600;color:#2F5496;cursor:pointer;font-family:inherit;transition:background .15s}
-.copy-btn:hover{background:#2F5496;color:white}
-.copy-success{background:#B7E1CD!important;color:#14532D!important}
 </style>
 </head>
 <body>
@@ -129,6 +117,10 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
     <div class="header-sub">IZI Safety · Subsidiary Gap Analysis Report · 2026</div>
   </div>
 </div>
+<!-- KPIs -->
+<div class="kpi-row">
+  <div class="kpi-card">
+    <div class="kpi-label">Companies Impacted</div>
     <div class="kpi-value" style="color:#DC2626">60</div>
     <div class="kpi-sub">out of 83 in platform</div>
   </div>
@@ -902,7 +894,7 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="num">—</td>
   <td class="num">1</td>
 </tr>
-<tr data-impact="Medium">
+<tr data-impact="High">
   <td style="font-weight:600">Intervenant En Zone Atex</td>
   <td>Intervenant zone ATEX</td>
   <td style="font-size:10px;color:#555">Travaux à chaud</td>
@@ -913,7 +905,7 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="num">1</td>
   <td class="num">1</td>
 </tr>
-<tr data-impact="Low">
+<tr data-impact="High">
   <td style="font-weight:600">Solarisation</td>
   <td>Intervenant sur panneaux solaires</td>
   <td style="font-size:10px;color:#555">Travaux sur système alimentés en énergie électrique</td>
@@ -924,7 +916,7 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="num">1</td>
   <td class="num">—</td>
 </tr>
-<tr data-impact="Low">
+<tr data-impact="Medium">
   <td style="font-weight:600">Superviseur</td>
   <td>Superviseur contractant</td>
   <td style="font-size:10px;color:#555">Contrôle - Supervision</td>
@@ -946,7 +938,7 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="num">—</td>
   <td class="num">—</td>
 </tr>
-<tr data-impact="High">
+<tr data-impact="Low">
   <td style="font-weight:600">Chef De Chantier</td>
   <td>Chef de manœuvre levage</td>
   <td style="font-size:10px;color:#555">Levage et manutention</td>
@@ -968,7 +960,7 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="num">1</td>
   <td class="num">1</td>
 </tr>
-<tr data-impact="Low">
+<tr data-impact="High">
   <td style="font-weight:600">Superviseur Totalenergies</td>
   <td>Superviseur TE</td>
   <td style="font-size:10px;color:#555">Contrôle - Supervision</td>
@@ -979,7 +971,7 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="num">1</td>
   <td class="num">—</td>
 </tr>
-<tr data-impact="Low">
+<tr data-impact="Medium">
   <td style="font-weight:600">Grutier Levageur</td>
   <td>Grutier</td>
   <td style="font-size:10px;color:#555">Levage et manutention</td>
@@ -990,7 +982,7 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="num">1</td>
   <td class="num">—</td>
 </tr>
-<tr data-impact="High">
+<tr data-impact="Medium">
   <td style="font-weight:600">Conducteur De Nacelle</td>
   <td>Conducteur/opérateur PEMP</td>
   <td style="font-size:10px;color:#555">Travaux en hauteur</td>
@@ -1012,7 +1004,7 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="num">—</td>
   <td class="num">—</td>
 </tr>
-<tr data-impact="Medium">
+<tr data-impact="Low">
   <td style="font-weight:600">Maintenance Lavage</td>
   <td>Intervenant travaux de levage</td>
   <td style="font-size:10px;color:#555">Travaux de levage</td>
@@ -1034,7 +1026,7 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="num">—</td>
   <td class="num">—</td>
 </tr>
-<tr data-impact="Low">
+<tr data-impact="Medium">
   <td style="font-weight:600">Maintenance Extincteurs</td>
   <td>Pompier</td>
   <td style="font-size:10px;color:#555">Lutte contre incendie</td>
@@ -1045,7 +1037,7 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="num">1</td>
   <td class="num">—</td>
 </tr>
-<tr data-impact="Low">
+<tr data-impact="Medium">
   <td style="font-weight:600">Soudeur</td>
   <td>Soudeur</td>
   <td style="font-size:10px;color:#555">Travaux à chaud</td>
@@ -1056,7 +1048,7 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="num">1</td>
   <td class="num">—</td>
 </tr>
-<tr data-impact="Medium">
+<tr data-impact="Low">
   <td style="font-weight:600">Monteur Echafaudage</td>
   <td>Monteur/démonteur échafaudage</td>
   <td style="font-size:10px;color:#555">Travaux en hauteur</td>
@@ -1067,7 +1059,7 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="num">1</td>
   <td class="num">1</td>
 </tr>
-<tr data-impact="Medium">
+<tr data-impact="Low">
   <td style="font-weight:600">Conducteur Engin De Chantier</td>
   <td>Conducteur d&#x27;engin d&#x27;excavation</td>
   <td style="font-size:10px;color:#555">Travaux de fouille</td>
@@ -1078,7 +1070,7 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="num">1</td>
   <td class="num">3</td>
 </tr>
-<tr data-impact="Medium">
+<tr data-impact="Low">
   <td style="font-weight:600">Élingueur</td>
   <td>Élingueur</td>
   <td style="font-size:10px;color:#555">Levage et manutention</td>
@@ -1089,7 +1081,7 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="num">2</td>
   <td class="num">1</td>
 </tr>
-<tr data-impact="High">
+<tr data-impact="Low">
   <td style="font-weight:600">Génie Civil Aipr</td>
   <td>Intervenant travaux de fouille</td>
   <td style="font-size:10px;color:#555">Travaux de fouille</td>
@@ -1111,7 +1103,7 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="num">1</td>
   <td class="num">—</td>
 </tr>
-<tr data-impact="Medium">
+<tr data-impact="Low">
   <td style="font-weight:600">Installateur Video Surveillance</td>
   <td>Technicien télécom &amp; IT</td>
   <td style="font-size:10px;color:#555">Installation télécom &amp; IT</td>
@@ -1122,7 +1114,7 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="num">2</td>
   <td class="num">2</td>
 </tr>
-<tr data-impact="Medium">
+<tr data-impact="Low">
   <td style="font-weight:600">Intervenant Espace Confine</td>
   <td>Intervenant en espace confiné</td>
   <td style="font-size:10px;color:#555">Travaux en espace confiné</td>
@@ -1144,7 +1136,7 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="num">1</td>
   <td class="num">2</td>
 </tr>
-<tr data-impact="Medium">
+<tr data-impact="Low">
   <td style="font-weight:600">Maintenance Groupe Elec Compress</td>
   <td>Technicien maintenance électromécanique</td>
   <td style="font-size:10px;color:#555">Mécanique / Automatisation / Électrotechnique</td>
@@ -1177,7 +1169,7 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="num">—</td>
   <td class="num">—</td>
 </tr>
-<tr data-impact="High">
+<tr data-impact="Low">
   <td style="font-weight:600">Telesurveillance</td>
   <td>Technicien télécom &amp; IT</td>
   <td style="font-size:10px;color:#555">Installation télécom &amp; IT</td>
@@ -1188,7 +1180,7 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="num">5</td>
   <td class="num">—</td>
 </tr>
-<tr data-impact="Medium">
+<tr data-impact="Low">
   <td style="font-weight:600">Verificateur Echafaudage</td>
   <td>vérificateur échafaudage</td>
   <td style="font-size:10px;color:#555">Travaux en hauteur</td>
@@ -1290,11 +1282,11 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="chips-cell"><span class="chip chip-rem">travaux en hauteur</span></td>
   <td class="chips-cell"><span class="none-chip">—</span></td>
 </tr>
-<tr data-impact="Medium">
+<tr data-impact="High">
   <td style="font-weight:600">Intervenant En Zone Atex</td>
   <td>Intervenant zone ATEX</td>
   <td style="font-size:10px;color:#555">Travaux à chaud</td>
-  <td><span class="badge badge-med">Medium</span></td>
+  <td><span class="badge badge-high">High</span></td>
   <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:23%;background:#DC2626"></div></div><span class="gauge-lbl">23%</span></div></td>
   <td class="num text-green">15</td>
   <td class="num text-red">49</td>
@@ -1307,11 +1299,11 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="chips-cell"><span class="chip chip-rem">consignation</span></td>
   <td class="chips-cell"><span class="none-chip">—</span></td>
 </tr>
-<tr data-impact="Low">
+<tr data-impact="High">
   <td style="font-weight:600">Solarisation</td>
   <td>Intervenant sur panneaux solaires</td>
   <td style="font-size:10px;color:#555">Travaux sur système alimentés en énergie électrique</td>
-  <td><span class="badge badge-low">Low</span></td>
+  <td><span class="badge badge-high">High</span></td>
   <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:10%;background:#DC2626"></div></div><span class="gauge-lbl">10%</span></div></td>
   <td class="num text-green">6</td>
   <td class="num text-red">54</td>
@@ -1324,11 +1316,11 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="chips-cell"><span class="none-chip">—</span></td>
   <td class="chips-cell"><span class="none-chip">—</span></td>
 </tr>
-<tr data-impact="Low">
+<tr data-impact="Medium">
   <td style="font-weight:600">Superviseur</td>
   <td>Superviseur contractant</td>
   <td style="font-size:10px;color:#555">Contrôle - Supervision</td>
-  <td><span class="badge badge-low">Low</span></td>
+  <td><span class="badge badge-med">Medium</span></td>
   <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:6%;background:#DC2626"></div></div><span class="gauge-lbl">6%</span></div></td>
   <td class="num text-green">3</td>
   <td class="num text-red">48</td>
@@ -1358,11 +1350,11 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="chips-cell"><span class="none-chip">—</span></td>
   <td class="chips-cell"><span class="none-chip">—</span></td>
 </tr>
-<tr data-impact="High">
+<tr data-impact="Low">
   <td style="font-weight:600">Chef De Chantier</td>
   <td>Chef de manœuvre levage</td>
   <td style="font-size:10px;color:#555">Levage et manutention</td>
-  <td><span class="badge badge-high">High</span></td>
+  <td><span class="badge badge-low">Low</span></td>
   <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:11%;background:#DC2626"></div></div><span class="gauge-lbl">11%</span></div></td>
   <td class="num text-green">5</td>
   <td class="num text-red">40</td>
@@ -1392,11 +1384,11 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="chips-cell"><span class="chip chip-rem">travaux de fouille et d&#x27;excavation</span></td>
   <td class="chips-cell"><span class="none-chip">—</span></td>
 </tr>
-<tr data-impact="Low">
+<tr data-impact="High">
   <td style="font-weight:600">Superviseur Totalenergies</td>
   <td>Superviseur TE</td>
   <td style="font-size:10px;color:#555">Contrôle - Supervision</td>
-  <td><span class="badge badge-low">Low</span></td>
+  <td><span class="badge badge-high">High</span></td>
   <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:20%;background:#DC2626"></div></div><span class="gauge-lbl">20%</span></div></td>
   <td class="num text-green">7</td>
   <td class="num text-red">28</td>
@@ -1409,11 +1401,11 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="chips-cell"><span class="none-chip">—</span></td>
   <td class="chips-cell"><span class="none-chip">—</span></td>
 </tr>
-<tr data-impact="Low">
+<tr data-impact="Medium">
   <td style="font-weight:600">Grutier Levageur</td>
   <td>Grutier</td>
   <td style="font-size:10px;color:#555">Levage et manutention</td>
-  <td><span class="badge badge-low">Low</span></td>
+  <td><span class="badge badge-med">Medium</span></td>
   <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:19%;background:#DC2626"></div></div><span class="gauge-lbl">19%</span></div></td>
   <td class="num text-green">5</td>
   <td class="num text-red">21</td>
@@ -1426,11 +1418,11 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="chips-cell"><span class="none-chip">—</span></td>
   <td class="chips-cell"><span class="none-chip">—</span></td>
 </tr>
-<tr data-impact="High">
+<tr data-impact="Medium">
   <td style="font-weight:600">Conducteur De Nacelle</td>
   <td>Conducteur/opérateur PEMP</td>
   <td style="font-size:10px;color:#555">Travaux en hauteur</td>
-  <td><span class="badge badge-high">High</span></td>
+  <td><span class="badge badge-med">Medium</span></td>
   <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:20%;background:#DC2626"></div></div><span class="gauge-lbl">20%</span></div></td>
   <td class="num text-green">4</td>
   <td class="num text-red">16</td>
@@ -1460,11 +1452,11 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="chips-cell"><span class="none-chip">—</span></td>
   <td class="chips-cell"><span class="none-chip">—</span></td>
 </tr>
-<tr data-impact="Medium">
+<tr data-impact="Low">
   <td style="font-weight:600">Maintenance Lavage</td>
   <td>Intervenant travaux de levage</td>
   <td style="font-size:10px;color:#555">Travaux de levage</td>
-  <td><span class="badge badge-med">Medium</span></td>
+  <td><span class="badge badge-low">Low</span></td>
   <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:23%;background:#DC2626"></div></div><span class="gauge-lbl">23%</span></div></td>
   <td class="num text-green">3</td>
   <td class="num text-red">10</td>
@@ -1494,11 +1486,11 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="chips-cell"><span class="none-chip">—</span></td>
   <td class="chips-cell"><span class="none-chip">—</span></td>
 </tr>
-<tr data-impact="Low">
+<tr data-impact="Medium">
   <td style="font-weight:600">Maintenance Extincteurs</td>
   <td>Pompier</td>
   <td style="font-size:10px;color:#555">Lutte contre incendie</td>
-  <td><span class="badge badge-low">Low</span></td>
+  <td><span class="badge badge-med">Medium</span></td>
   <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:45%;background:#F59E0B"></div></div><span class="gauge-lbl">45%</span></div></td>
   <td class="num text-green">5</td>
   <td class="num text-red">6</td>
@@ -1511,11 +1503,11 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="chips-cell"><span class="none-chip">—</span></td>
   <td class="chips-cell"><span class="none-chip">—</span></td>
 </tr>
-<tr data-impact="Low">
+<tr data-impact="Medium">
   <td style="font-weight:600">Soudeur</td>
   <td>Soudeur</td>
   <td style="font-size:10px;color:#555">Travaux à chaud</td>
-  <td><span class="badge badge-low">Low</span></td>
+  <td><span class="badge badge-med">Medium</span></td>
   <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:40%;background:#F59E0B"></div></div><span class="gauge-lbl">40%</span></div></td>
   <td class="num text-green">4</td>
   <td class="num text-red">6</td>
@@ -1528,11 +1520,11 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="chips-cell"><span class="none-chip">—</span></td>
   <td class="chips-cell"><span class="none-chip">—</span></td>
 </tr>
-<tr data-impact="Medium">
+<tr data-impact="Low">
   <td style="font-weight:600">Monteur Echafaudage</td>
   <td>Monteur/démonteur échafaudage</td>
   <td style="font-size:10px;color:#555">Travaux en hauteur</td>
-  <td><span class="badge badge-med">Medium</span></td>
+  <td><span class="badge badge-low">Low</span></td>
   <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:14%;background:#DC2626"></div></div><span class="gauge-lbl">14%</span></div></td>
   <td class="num text-green">1</td>
   <td class="num text-red">6</td>
@@ -1545,11 +1537,11 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="chips-cell"><span class="none-chip">—</span></td>
   <td class="chips-cell"><span class="chip chip-rem">habilitation montage echafaudage</span></td>
 </tr>
-<tr data-impact="Medium">
+<tr data-impact="Low">
   <td style="font-weight:600">Conducteur Engin De Chantier</td>
   <td>Conducteur d&#x27;engin d&#x27;excavation</td>
   <td style="font-size:10px;color:#555">Travaux de fouille</td>
-  <td><span class="badge badge-med">Medium</span></td>
+  <td><span class="badge badge-low">Low</span></td>
   <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:0%;background:#DC2626"></div></div><span class="gauge-lbl">0%</span></div></td>
   <td class="num text-green">0</td>
   <td class="num text-red">31</td>
@@ -1562,11 +1554,11 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="chips-cell"><span class="none-chip">—</span></td>
   <td class="chips-cell"><span class="chip chip-rem">attestation aipr prox réseau</span><span class="chip chip-rem">autorisation de conduite</span><span class="chip chip-rem">caces r486 r489</span></td>
 </tr>
-<tr data-impact="Medium">
+<tr data-impact="Low">
   <td style="font-weight:600">Élingueur</td>
   <td>Élingueur</td>
   <td style="font-size:10px;color:#555">Levage et manutention</td>
-  <td><span class="badge badge-med">Medium</span></td>
+  <td><span class="badge badge-low">Low</span></td>
   <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:0%;background:#DC2626"></div></div><span class="gauge-lbl">0%</span></div></td>
   <td class="num text-green">0</td>
   <td class="num text-red">6</td>
@@ -1579,11 +1571,11 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="chips-cell"><span class="none-chip">—</span></td>
   <td class="chips-cell"><span class="chip chip-rem">habilitation travaux en hauteur</span></td>
 </tr>
-<tr data-impact="High">
+<tr data-impact="Low">
   <td style="font-weight:600">Génie Civil Aipr</td>
   <td>Intervenant travaux de fouille</td>
   <td style="font-size:10px;color:#555">Travaux de fouille</td>
-  <td><span class="badge badge-high">High</span></td>
+  <td><span class="badge badge-low">Low</span></td>
   <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:0%;background:#DC2626"></div></div><span class="gauge-lbl">0%</span></div></td>
   <td class="num text-green">0</td>
   <td class="num text-red">4</td>
@@ -1613,11 +1605,11 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="chips-cell"><span class="none-chip">—</span></td>
   <td class="chips-cell"><span class="none-chip">—</span></td>
 </tr>
-<tr data-impact="Medium">
+<tr data-impact="Low">
   <td style="font-weight:600">Installateur Video Surveillance</td>
   <td>Technicien télécom &amp; IT</td>
   <td style="font-size:10px;color:#555">Installation télécom &amp; IT</td>
-  <td><span class="badge badge-med">Medium</span></td>
+  <td><span class="badge badge-low">Low</span></td>
   <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:0%;background:#DC2626"></div></div><span class="gauge-lbl">0%</span></div></td>
   <td class="num text-green">0</td>
   <td class="num text-red">2</td>
@@ -1630,11 +1622,11 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="chips-cell"><span class="chip chip-rem">travaux en hauteur</span></td>
   <td class="chips-cell"><span class="chip chip-rem">habilitation travaux en hauteur</span></td>
 </tr>
-<tr data-impact="Medium">
+<tr data-impact="Low">
   <td style="font-weight:600">Intervenant Espace Confine</td>
   <td>Intervenant en espace confiné</td>
   <td style="font-size:10px;color:#555">Travaux en espace confiné</td>
-  <td><span class="badge badge-med">Medium</span></td>
+  <td><span class="badge badge-low">Low</span></td>
   <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:0%;background:#DC2626"></div></div><span class="gauge-lbl">0%</span></div></td>
   <td class="num text-green">0</td>
   <td class="num text-red">2</td>
@@ -1664,11 +1656,11 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="chips-cell"><span class="chip chip-rem">opérations de levage</span><span class="chip chip-rem">travaux à chaud</span></td>
   <td class="chips-cell"><span class="none-chip">—</span></td>
 </tr>
-<tr data-impact="Medium">
+<tr data-impact="Low">
   <td style="font-weight:600">Maintenance Groupe Elec Compress</td>
   <td>Technicien maintenance électromécanique</td>
   <td style="font-size:10px;color:#555">Mécanique / Automatisation / Électrotechnique</td>
-  <td><span class="badge badge-med">Medium</span></td>
+  <td><span class="badge badge-low">Low</span></td>
   <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:0%;background:#DC2626"></div></div><span class="gauge-lbl">0%</span></div></td>
   <td class="num text-green">0</td>
   <td class="num text-red">13</td>
@@ -1715,11 +1707,11 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="chips-cell"><span class="none-chip">—</span></td>
   <td class="chips-cell"><span class="none-chip">—</span></td>
 </tr>
-<tr data-impact="High">
+<tr data-impact="Low">
   <td style="font-weight:600">Telesurveillance</td>
   <td>Technicien télécom &amp; IT</td>
   <td style="font-size:10px;color:#555">Installation télécom &amp; IT</td>
-  <td><span class="badge badge-high">High</span></td>
+  <td><span class="badge badge-low">Low</span></td>
   <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:0%;background:#DC2626"></div></div><span class="gauge-lbl">0%</span></div></td>
   <td class="num text-green">0</td>
   <td class="num text-red">4</td>
@@ -1732,11 +1724,11 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   <td class="chips-cell"><span class="none-chip">—</span></td>
   <td class="chips-cell"><span class="none-chip">—</span></td>
 </tr>
-<tr data-impact="Medium">
+<tr data-impact="Low">
   <td style="font-weight:600">Verificateur Echafaudage</td>
   <td>vérificateur échafaudage</td>
   <td style="font-size:10px;color:#555">Travaux en hauteur</td>
-  <td><span class="badge badge-med">Medium</span></td>
+  <td><span class="badge badge-low">Low</span></td>
   <td><div class="gauge-wrap"><div class="gauge-track"><div class="gauge-bar" style="width:0%;background:#DC2626"></div></div><span class="gauge-lbl">0%</span></div></td>
   <td class="num text-green">0</td>
   <td class="num text-red">4</td>
@@ -1754,89 +1746,58 @@ body{font-family:"DM Sans",sans-serif;background:#F3F4F6;color:#111827}
   </div>
 </div>
 
-<!-- ════════════════════════════════════════════ TAB 4 ════ -->
+<!-- TAB 4 - SYNTHESE -->
 <div class="tab-content" id="tab4" style="display:none">
 <div class="synth-wrap">
   <div class="synth-card">
     <div class="synth-card-title">Synthèse — Harmonisation des profils | Antilles Guyane</div>
-
-    <div id="email-body" style="font-size:13px;line-height:1.8;color:#111827">
-
-      <div class="synth-kpi-grid">
-        <div class="synth-kpi"><div class="synth-kpi-val">765</div><div class="synth-kpi-lbl">Utilisateurs dans le périmètre</div></div>
-        <div class="synth-kpi"><div class="synth-kpi-val red">60</div><div class="synth-kpi-lbl">Entreprises impactées (sur 83)</div></div>
-        <div class="synth-kpi"><div class="synth-kpi-val">30</div><div class="synth-kpi-lbl">Profils locaux analysés</div></div>
-        <div class="synth-kpi"><div class="synth-kpi-val red">13%</div><div class="synth-kpi-lbl">Taux de conformité moyen</div></div>
-        <div class="synth-kpi"><div class="synth-kpi-val" style="color:#16A34A">100%</div><div class="synth-kpi-lbl">Meilleur profil (Maint Clim.)</div></div>
-      </div><br>
-
-      <p style="font-weight:700;font-size:14px;color:#1C2E5C;margin-bottom:10px">&#x1F534; Profils prioritaires — utilisateurs conformes à risque</p>
-      <p style="font-size:12px;color:#6B7280;margin-bottom:12px">Ces profils ont des ressources <strong>à ajouter</strong> : les utilisateurs actuellement conformes perdront leur conformité dès que ces ressources seront ajoutées à leur profil.</p>
-
-      <div class="synth-profile-row">
-        <div class="synth-profile-name">Intervenant En Zone Atex<br><span style="font-weight:400;font-size:11px;color:#6B7280">→ Intervenant zone ATEX</span></div>
-        <div class="synth-profile-detail"><span class="synth-tag tag-urgent">15 conformes impactés</span> E-learning <strong>travaux à chaud</strong> à ajouter.</div>
-      </div>
-      <div class="synth-profile-row">
-        <div class="synth-profile-name">Superviseur TotalEnergies<br><span style="font-weight:400;font-size:11px;color:#6B7280">→ Superviseur TE</span></div>
-        <div class="synth-profile-detail"><span class="synth-tag tag-urgent">7 conformes impactés</span> E-learning <strong>consignation mécanique</strong> à ajouter.</div>
-      </div>
-      <div class="synth-profile-row">
-        <div class="synth-profile-name">Solarisation<br><span style="font-weight:400;font-size:11px;color:#6B7280">→ Intervenant sur panneaux solaires</span></div>
-        <div class="synth-profile-detail"><span class="synth-tag tag-urgent">6 conformes impactés</span> Document <strong>habilitation travaux électriques</strong> à ajouter.</div>
-      </div>
-      <div class="synth-profile-row">
-        <div class="synth-profile-name">Maintenance Extincteurs<br><span style="font-weight:400;font-size:11px;color:#6B7280">→ Pompier</span></div>
-        <div class="synth-profile-detail"><span class="synth-tag tag-urgent">5 conformes impactés</span> Document <strong>formation spécialisée pompier</strong> à ajouter.</div>
-      </div>
-      <div class="synth-profile-row">
-        <div class="synth-profile-name">Maint Climatisation<br><span style="font-weight:400;font-size:11px;color:#6B7280">→ Technicien HVAC</span></div>
-        <div class="synth-profile-detail"><span class="synth-tag tag-urgent">5 conformes impactés</span> Document <strong>habilitation travaux électriques</strong> à ajouter — profil actuellement à 100%.</div>
-      </div>
-      <div class="synth-profile-row">
-        <div class="synth-profile-name">Grutier Levageur<br><span style="font-weight:400;font-size:11px;color:#6B7280">→ Grutier</span></div>
-        <div class="synth-profile-detail"><span class="synth-tag tag-urgent">5 conformes impactés</span> Document <strong>CACES ou équivalent grue</strong> à ajouter.</div>
-      </div>
-      <div class="synth-profile-row">
-        <div class="synth-profile-name">Conducteur De Nacelle<br><span style="font-weight:400;font-size:11px;color:#6B7280">→ Conducteur/opérateur PEMP</span></div>
-        <div class="synth-profile-detail"><span class="synth-tag tag-urgent">4 conformes impactés</span> E-learning <strong>travaux en hauteur</strong> + habilitation PEMP + déclaration d'aptitude à ajouter.</div>
-      </div>
-      <div class="synth-profile-row">
-        <div class="synth-profile-name">Soudeur<br><span style="font-weight:400;font-size:11px;color:#6B7280">→ Soudeur</span></div>
-        <div class="synth-profile-detail"><span class="synth-tag tag-urgent">4 conformes impactés</span> Document <strong>habilitation soudeur</strong> à ajouter.</div>
-      </div>
-      <div class="synth-profile-row">
-        <div class="synth-profile-name">Superviseur<br><span style="font-weight:400;font-size:11px;color:#6B7280">→ Superviseur contractant</span></div>
-        <div class="synth-profile-detail"><span class="synth-tag tag-urgent">3 conformes impactés</span> E-learning <strong>consignation mécanique</strong> à ajouter.</div>
-      </div><br>
-
-      <p style="font-weight:700;font-size:14px;color:#1C2E5C;margin-bottom:12px">&#x1F7E1; Points en attente de votre validation</p>
-
-      <div class="synth-pending-item">
-        <strong>1. Conducteur de nacelle</strong>
-        Peut-on remplacer le CACES r486/r489 par l&apos;Habilitation PEMP, qui couvre l&apos;ensemble des catégories de plateformes élévatrices&nbsp;?
-      </div>
-      <div class="synth-pending-item">
-        <strong>2. Conducteur engin de chantier / Génie civil AIPR / Intervenant espace confiné</strong>
-        Les documents présents sur la plateforme mais absents du profil harmonisé HQ sont-ils à supprimer ou à conserver localement&nbsp;?
-      </div>
-      <div class="synth-pending-item">
-        <strong>3. Maintenance extincteurs</strong>
-        Le profil <em>Pompier</em> est-il adapté, ou souhaitez-vous utiliser le profil <em>Technicien maintenance</em> à la place&nbsp;?
-      </div>
-      <div class="synth-pending-item" style="border-left-color:#16A34A;background:#F0FDF4">
-        <strong style="color:#15803D">4. Monteur échafaudage &mdash; Aucune suppression nécessaire</strong>
-        La mise à jour consiste uniquement à renommer le document&nbsp;: <em>habilitation montage échafaudage</em> → <em>habilitation monteur/démonteur échafaudage</em>.
-      </div>
-      <div class="synth-pending-item" style="border-left-color:#16A34A;background:#F0FDF4">
-        <strong style="color:#15803D">5. Télésurveillance</strong>
-        Le profil actuel sera remplacé. Si besoin, les utilisateurs concernés pourront se voir attribuer en complément le profil métier à haut risque <em>Intervenant en hauteur</em>.
-      </div><br>
-
-      <div class="synth-footer">
-        &#x2705; <strong>Statut global&nbsp;:</strong> Les 30 profils sont au statut <strong>Prêt</strong>. Les actions listées ci-dessus peuvent être mises en œuvre dès confirmation de votre part sur les points en attente.
-      </div><br>
+    <p style="font-weight:700;font-size:14px;color:#1C2E5C;margin-bottom:10px">&#x1F534; Profils prioritaires — utilisateurs conformes à risque</p>
+    <p style="font-size:12px;color:#6B7280;margin-bottom:12px">Ces profils ont des ressources <strong>à ajouter</strong> : les utilisateurs actuellement conformes perdront leur conformité dès que ces ressources seront ajoutées.</p>
+    <div class="synth-profile-row">
+      <div class="synth-profile-name">Intervenant En Zone Atex<br><span style="font-weight:400;font-size:11px;color:#6B7280">→ Intervenant zone ATEX</span></div>
+      <div class="synth-profile-detail"><span class="synth-tag tag-urgent">15 conformes impactés</span> E-learning <strong>travaux à chaud</strong> à ajouter.</div>
     </div>
+    <div class="synth-profile-row">
+      <div class="synth-profile-name">Superviseur TotalEnergies<br><span style="font-weight:400;font-size:11px;color:#6B7280">→ Superviseur TE</span></div>
+      <div class="synth-profile-detail"><span class="synth-tag tag-urgent">7 conformes impactés</span> E-learning <strong>consignation mécanique</strong> à ajouter.</div>
+    </div>
+    <div class="synth-profile-row">
+      <div class="synth-profile-name">Solarisation<br><span style="font-weight:400;font-size:11px;color:#6B7280">→ Intervenant sur panneaux solaires</span></div>
+      <div class="synth-profile-detail"><span class="synth-tag tag-urgent">6 conformes impactés</span> Document <strong>habilitation travaux électriques</strong> à ajouter.</div>
+    </div>
+    <div class="synth-profile-row">
+      <div class="synth-profile-name">Maintenance Extincteurs<br><span style="font-weight:400;font-size:11px;color:#6B7280">→ Pompier</span></div>
+      <div class="synth-profile-detail"><span class="synth-tag tag-urgent">5 conformes impactés</span> Document <strong>formation spécialisée pompier</strong> à ajouter.</div>
+    </div>
+    <div class="synth-profile-row">
+      <div class="synth-profile-name">Maint Climatisation<br><span style="font-weight:400;font-size:11px;color:#6B7280">→ Technicien HVAC · 100% actuellement</span></div>
+      <div class="synth-profile-detail"><span class="synth-tag tag-urgent">5 conformes impactés</span> Document <strong>habilitation travaux électriques</strong> à ajouter.</div>
+    </div>
+    <div class="synth-profile-row">
+      <div class="synth-profile-name">Grutier Levageur<br><span style="font-weight:400;font-size:11px;color:#6B7280">→ Grutier</span></div>
+      <div class="synth-profile-detail"><span class="synth-tag tag-urgent">5 conformes impactés</span> Document <strong>CACES ou équivalent grue</strong> à ajouter.</div>
+    </div>
+    <div class="synth-profile-row">
+      <div class="synth-profile-name">Conducteur De Nacelle<br><span style="font-weight:400;font-size:11px;color:#6B7280">→ Conducteur/opérateur PEMP</span></div>
+      <div class="synth-profile-detail"><span class="synth-tag tag-urgent">4 conformes impactés</span> E-learning <strong>travaux en hauteur</strong> + habilitation PEMP + déclaration d&apos;aptitude à ajouter.</div>
+    </div>
+    <div class="synth-profile-row">
+      <div class="synth-profile-name">Soudeur<br><span style="font-weight:400;font-size:11px;color:#6B7280">→ Soudeur</span></div>
+      <div class="synth-profile-detail"><span class="synth-tag tag-urgent">4 conformes impactés</span> Document <strong>habilitation soudeur</strong> à ajouter.</div>
+    </div>
+    <div class="synth-profile-row">
+      <div class="synth-profile-name">Superviseur<br><span style="font-weight:400;font-size:11px;color:#6B7280">→ Superviseur contractant</span></div>
+      <div class="synth-profile-detail"><span class="synth-tag tag-urgent">3 conformes impactés</span> E-learning <strong>consignation mécanique</strong> à ajouter.</div>
+    </div>
+  </div>
+  <div class="synth-card">
+    <div class="synth-card-title">&#x1F7E1; Points en attente de validation</div>
+    <div class="synth-pending-item"><strong>1. Conducteur de nacelle</strong>Peut-on remplacer le CACES r486/r489 par l&apos;Habilitation PEMP ?</div>
+    <div class="synth-pending-item"><strong>2. Conducteur engin de chantier / Génie civil AIPR / Intervenant espace confiné</strong>Les documents présents sur la plateforme mais absents du profil HQ sont-ils à supprimer ou conserver localement ?</div>
+    <div class="synth-pending-item"><strong>3. Maintenance extincteurs</strong>Le profil <em>Pompier</em> est-il adapté, ou préférez-vous le profil <em>Technicien maintenance</em> ?</div>
+    <div class="synth-pending-item" style="border-left-color:#16A34A;background:#F0FDF4"><strong style="color:#15803D">4. Monteur échafaudage — Aucune suppression nécessaire</strong>Renommer uniquement : <em>habilitation montage échafaudage</em> → <em>habilitation monteur/démonteur échafaudage</em>.</div>
+    <div class="synth-pending-item" style="border-left-color:#16A34A;background:#F0FDF4"><strong style="color:#15803D">5. Télésurveillance</strong>Le profil sera remplacé. Les utilisateurs concernés pourront se voir attribuer le profil <em>Intervenant en hauteur</em>.</div>
+    <div class="synth-footer">&#x2705; <strong>Statut global :</strong> Les 30 profils sont au statut <strong>Prêt</strong>. Les actions peuvent être mises en œuvre dès confirmation sur les points ci-dessus.</div>
   </div>
 </div>
 </div>
@@ -1875,7 +1836,6 @@ function sortTable(tableId, col){
   });
   rows.forEach(function(r){ tbody.appendChild(r); });
 }
-
 </script>
 </body>
 </html>
